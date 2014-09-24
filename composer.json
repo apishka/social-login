@@ -1,0 +1,23 @@
+{
+    "name": "apishka/social-login",
+    "description": "Apishka social login",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgeny Reykh",
+            "email": "evgeny@reykh.com"
+        },
+        {
+            "name": "Alex Lobtsov",
+            "email": "alex@lobtsov.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6"
+    },
+    "autoload": {
+        "psr-0": {
+            "Apishka_SocialLogin_": "source/Apishka/SocialLogin/"
+        }
+    }
+}
