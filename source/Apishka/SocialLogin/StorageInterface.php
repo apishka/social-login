@@ -6,7 +6,7 @@
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
-interface Apishka_SocialLogin_Storage_StorageInterface
+interface Apishka_SocialLogin_StorageInterface
 {
     /**
      * Set value
@@ -14,7 +14,7 @@ interface Apishka_SocialLogin_Storage_StorageInterface
      * @param string    $key
      * @param mixed     $value
      * @access public
-     * @return Apishka_SocialLogin_Storage_StorageInterface
+     * @return Apishka_SocialLogin_StorageInterface
      */
 
     public function set($key, $value);
@@ -34,7 +34,7 @@ interface Apishka_SocialLogin_Storage_StorageInterface
      *
      * @param string    $key
      * @access public
-     * @return Apishka_SocialLogin_Storage_StorageInterface
+     * @return Apishka_SocialLogin_StorageInterface
      */
 
     public function delete($key);

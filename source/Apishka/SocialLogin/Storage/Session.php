@@ -3,11 +3,11 @@
 /**
  * Apishka social login storage session
  *
- * @uses    Apishka_SocialLogin_Storage_StorageInterface
+ * @uses    Apishka_SocialLogin_StorageInterface
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
-class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage_StorageInterface
+class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_StorageInterface
 {
     /**
      * Constants
@@ -37,7 +37,7 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
      * @param string    $key
      * @param mixed     $value
      * @access public
-     * @return Apishka_SocialLogin_Storage_StorageInterface
+     * @return Apishka_SocialLogin_StorageInterface
      */
 
     public function set($key, $value)
@@ -68,7 +68,7 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
      *
      * @param string    $key
      * @access public
-     * @return Apishka_SocialLogin_Storage_StorageInterface
+     * @return Apishka_SocialLogin_StorageInterface
      */
 
     public function delete($key)
