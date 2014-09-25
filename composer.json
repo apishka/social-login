@@ -13,11 +13,16 @@
         }
     ],
     "require": {
-        "php": ">=5.6"
+        "php": ">=5.6",
+        "ext-curl": "*"
+    },
+    "require-dev": {
+        "phing/phing": "~2.8",
+        "symfony/finder": "2.5.*"
     },
     "autoload": {
         "psr-0": {
-            "Apishka_SocialLogin_": "source/Apishka/SocialLogin/"
+            "Apishka_SocialLogin_": "source/"
         }
     }
 }
