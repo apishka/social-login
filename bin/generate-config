@@ -47,6 +47,8 @@ class Apishka_GenerateConfigCommand extends \Symfony\Component\Console\Command\C
             ->setProviders($output)
             ->saveConfig($output)
         ;
+
+        $output->writeln('Done');
     }
 
     /**
