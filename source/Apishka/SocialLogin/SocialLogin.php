@@ -41,7 +41,7 @@ class Apishka_SocialLogin_SocialLogin
     protected function initialize(array $config)
     {
         $this->_config = array_replace_recursive(
-            $this->_getConfigFilePath(),
+            require $this->_getConfigFilePath(),
             $config
         );
 
