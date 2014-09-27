@@ -97,7 +97,12 @@ class Apishka_GenerateConfigCommand extends \Symfony\Component\Console\Command\C
 
         foreach (get_declared_classes() as $class)
         {
-            if (!($class instanceof Apishka_SocialLogin_ProviderInterface))
+            if (!array_key_exists('Apishka_SocialLogin_ProviderInterface', class_implements($class)))
+                continue;
+
+            $reflector = new ReflectionClass($class);
+
+            if ($reflector->isAbstract())
                 continue;
 
             $object = new $class;
