@@ -7,5 +7,9 @@ return array (
   ),
   'providers' => 
   array (
+    'twitter' => 
+    array (
+      'class' => 'Apishka_SocialLogin_Provider_Twitter',
+    ),
   ),
 );

@@ -57,6 +57,8 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
 
     public function get($key)
     {
+        $key = join(':', func_get_args());
+
         if (!array_key_exists($key, $_SESSION[self::STORAGE_PREFIX]))
             return null;
 
