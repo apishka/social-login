@@ -11,5 +11,9 @@ return array (
     array (
       'class' => 'Apishka_SocialLogin_Provider_Twitter',
     ),
+    'yahoo' => 
+    array (
+      'class' => 'Apishka_SocialLogin_Provider_Yahoo',
+    ),
   ),
 );

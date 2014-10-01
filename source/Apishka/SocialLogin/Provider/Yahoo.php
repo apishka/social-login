@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Apishka social login provider: twitter
+ * Apishka social login provider: yahoo
  *
  * @uses    Apishka_SocialLogin_Provider_OauthAbstract
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
-class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_OauthAbstract
+class Apishka_SocialLogin_Provider_Yahoo extends Apishka_SocialLogin_Provider_OauthAbstract
 {
     /**
      * Returns alias
@@ -18,7 +18,7 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getAlias()
     {
-        return 'twitter';
+        return 'yahoo';
     }
 
     /**
@@ -30,7 +30,7 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getOauthBaseUrl()
     {
-        return 'https://api.twitter.com/1.1/';
+        return 'https://api.login.yahoo.com/';
     }
 
     /**
@@ -42,7 +42,7 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getOauthRequestUrl()
     {
-        return '/oauth/request_token';
+        return '/oauth/v2/get_request_token';
     }
 
     /**
@@ -54,6 +54,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getOauthAuthorizeUrl()
     {
-        return '/oauth/authenticate';
+        return '/oauth/v2/authorize';
     }
 }

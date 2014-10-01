@@ -28,25 +28,51 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     protected function doGetRequestToken()
     {
-        $result = $this->getHttpClient()->post(
-            $this->getApiRequestUrl(),
-            array(
-                'stream' => false,
-                'headers' => array(
-                    'Accept'        => 'application/json',
-                    'Content-Type'  => 'application/json',
-                ),
-                'config' => array(
-                    'curl' => array(
-                        CURLOPT_RETURNTRANSFER => 1,
-                    ),
-                ),
-            )
-        );
+        try
+        {
+            $result = $this->getHttpClient()->post(
+                $this->getOauthRequestUrl()
+            );
+        }
+        catch (GuzzleHttp\Exception\RequestException $exception)
+        {
+            throw $e;
+        }
 
         $result->getBody()->seek(0);
 
-        return $result->getBody()->getContents();
+        parse_str(
+            $result->getBody()->getContents(),
+            $output
+        );
+
+        var_dump($output);
+
+        return $output;
+    }
+
+    /**
+     * Do authorize
+     *
+     * @access protected
+     * @return void
+     */
+
+    protected function doAuthorizeRedirect()
+    {
+        $url = \GuzzleHttp\url::fromString(rtrim($this->getOauthBaseUrl(), '/'));
+        $url->addPath($this->getOauthAuthorizeUrl());
+        $url->setQuery(
+            array(
+                'oauth_token' => $this->getStorage()->get($this->getAlias(), 'request_token'),
+            )
+        );
+
+        var_dump($url);
+        die;
+
+        header('Location: ' . $url->__toString(), true, 302);
+        die;
     }
 
     /**
@@ -58,7 +84,22 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     public function auth()
     {
-        $this->doGetRequestToken();
+        //if (!$this->getStorage()->get($this->getAlias(), 'request_token'))
+        //{
+            $request = $this->doGetRequestToken();
+
+            var_dump($request);
+
+            $this->getStorage()
+                ->set($this->getAlias(), 'request_token',           $request['oauth_token'])
+                ->set($this->getAlias(), 'request_token_secret',    $request['oauth_token_secret'])
+            ;
+
+            $this->doAuthorizeRedirect();
+        //}
+        //else
+        //{
+        //}
     }
 
     /**
@@ -94,50 +135,18 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
             array(
                 'consumer_key'      => $providers[$this->getAlias()]['consumer_key'],
                 'consumer_secret'   => $providers[$this->getAlias()]['consumer_secret'],
-                'token'             => $this->getToken(),
-                'token_secret'      => $this->getTokenSecret(),
             )
         );
 
         $this->_http_client = new \GuzzleHttp\Client(
             array(
-                'base_url' => $this->getApiBaseUrl(),
+                'base_url' => $this->getOauthBaseUrl(),
                 'defaults' => ['auth' => 'oauth'],
             )
         );
 
         $this->_http_client->getEmitter()->attach($oauth);
-        $this->_http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber());
-    }
-
-    /**
-     * Get token
-     *
-     * @access protected
-     * @return string|null
-     */
-
-    protected function getToken()
-    {
-        return $this->getStorage()->get(
-            $this->getAlias(),
-            'token'
-        );
-    }
-
-    /**
-     * Returns token secret
-     *
-     * @access protected
-     * @return string|null
-     */
-
-    protected function getTokenSecret()
-    {
-        return $this->getStorage()->get(
-            $this->getAlias(),
-            'token_secret'
-        );
+        //$this->_http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber());
     }
 
     /**
@@ -148,7 +157,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
      * @return string
      */
 
-    abstract protected function getApiBaseUrl();
+    abstract protected function getOauthBaseUrl();
 
     /**
      * Returns api request url
@@ -158,5 +167,15 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
      * @return string
      */
 
-    abstract protected function getApiRequestUrl();
+    abstract protected function getOauthRequestUrl();
+
+    /**
+     * Returns authorize url
+     *
+     * @abstract
+     * @access protected
+     * @return string
+     */
+
+    abstract protected function getOauthAuthorizeUrl();
 }
