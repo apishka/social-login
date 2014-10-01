@@ -40,8 +40,12 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
      * @return Apishka_SocialLogin_StorageInterface
      */
 
-    public function set($key, $value)
+    public function set()
     {
+        $args   = func_get_args();
+        $value  = array_pop($args);
+        $key    = join(':', $args);
+
         $_SESSION[self::STORAGE_PREFIX][$key] = $value;
 
         return $this;
@@ -55,7 +59,7 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
      * @return mixed
      */
 
-    public function get($key)
+    public function get()
     {
         $key = join(':', func_get_args());
 
@@ -73,8 +77,10 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
      * @return Apishka_SocialLogin_StorageInterface
      */
 
-    public function delete($key)
+    public function delete()
     {
+        $key = join(':', func_get_args());
+
         unset($_SESSION[self::STORAGE_PREFIX][$key]);
 
         return $this;
