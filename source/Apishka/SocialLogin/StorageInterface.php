@@ -17,7 +17,7 @@ interface Apishka_SocialLogin_StorageInterface
      * @return Apishka_SocialLogin_StorageInterface
      */
 
-    public function set($key, $value);
+    public function set();
 
     /**
      * Get value
@@ -27,7 +27,7 @@ interface Apishka_SocialLogin_StorageInterface
      * @return mixed
      */
 
-    public function get($key);
+    public function get();
 
     /**
      * Delete
@@ -37,5 +37,5 @@ interface Apishka_SocialLogin_StorageInterface
      * @return Apishka_SocialLogin_StorageInterface
      */
 
-    public function delete($key);
+    public function delete();
 }
