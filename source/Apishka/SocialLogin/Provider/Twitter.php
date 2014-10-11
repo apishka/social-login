@@ -30,7 +30,7 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getOauthBaseUrl()
     {
-        return 'https://api.twitter.com/1.1/';
+        return 'https://api.twitter.com/';
     }
 
     /**

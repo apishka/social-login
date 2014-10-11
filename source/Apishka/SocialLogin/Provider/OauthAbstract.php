@@ -36,7 +36,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
         }
         catch (GuzzleHttp\Exception\RequestException $exception)
         {
-            throw $e;
+            throw $exception;
         }
 
         $result->getBody()->seek(0);
@@ -68,9 +68,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
             )
         );
 
-        var_dump($url);
-        die;
-
         header('Location: ' . $url->__toString(), true, 302);
         die;
     }
@@ -84,11 +81,9 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     public function auth()
     {
-        //if (!$this->getStorage()->get($this->getAlias(), 'request_token'))
-        //{
+        if (!$this->getStorage()->get($this->getAlias(), 'request_token'))
+        {
             $request = $this->doGetRequestToken();
-
-            var_dump($request);
 
             $this->getStorage()
                 ->set($this->getAlias(), 'request_token',           $request['oauth_token'])
@@ -96,10 +91,17 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
             ;
 
             $this->doAuthorizeRedirect();
-        //}
-        //else
-        //{
-        //}
+        }
+        else
+        {
+            $this->getStorage()
+                ->delete($this->getAlias(), 'request_token')
+                ->delete($this->getAlias(), 'request_token_secret')
+            ;
+
+            if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']))
+                throw new Apishka_SocialLogin_Exception('User not allow access');
+        }
     }
 
     /**
