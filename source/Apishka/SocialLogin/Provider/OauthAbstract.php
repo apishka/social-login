@@ -23,7 +23,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
      * Do get request token
      *
      * @access protected
-     * @return string
+     * @return array
      */
 
     protected function doGetRequestToken()
@@ -36,7 +36,12 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
         }
         catch (GuzzleHttp\Exception\RequestException $exception)
         {
-            throw $exception;
+            //if ($exception->hasResponse()) {
+            //    echo $exception->getResponse();
+            //}
+            //die;
+
+            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
         }
 
         $result->getBody()->seek(0);
@@ -45,8 +50,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
             $result->getBody()->getContents(),
             $output
         );
-
-        var_dump($output);
 
         return $output;
     }
@@ -69,6 +72,48 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
         header('Location: ' . $url->__toString(), true, 302);
         die;
+    }
+
+    /**
+     * Do get access token
+     *
+     * @access protected
+     * @return array
+     */
+
+    protected function doGetAccessToken()
+    {
+        try
+        {
+            $result = $this->getHttpClient()->post(
+                $this->getOauthAccessUrl(),
+                array(
+                    'query' => array(
+                        'oauth_verifier' => $this->getStorage()->get(
+                            $this->getAlias(), 'oauth_verifier'
+                        )
+                    )
+                )
+            );
+        }
+        catch (GuzzleHttp\Exception\RequestException $exception)
+        {
+            if ($exception->hasResponse()) {
+                echo $exception->getResponse();
+            }
+            die;
+
+            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
+        }
+
+        $result->getBody()->seek(0);
+
+        parse_str(
+            $result->getBody()->getContents(),
+            $output
+        );
+
+        return $output;
     }
 
     /**
@@ -100,6 +145,25 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
             if (!isset($_GET['oauth_token']) || !isset($_GET['oauth_verifier']))
                 throw new Apishka_SocialLogin_Exception('User not allow access');
+
+            $this->getStorage()
+                ->set($this->getAlias(), 'oauth_token',     $_GET['oauth_token'])
+                ->set($this->getAlias(), 'oauth_verifier',  $_GET['oauth_verifier'])
+            ;
+
+            $request = $this->doGetAccessToken();
+
+            $this->getStorage()
+                ->delete($this->getAlias(), 'oauth_token',     $_GET['oauth_token'])
+                ->delete($this->getAlias(), 'oauth_verifier',  $_GET['oauth_verifier'])
+            ;
+
+            $this->getStorage()
+                ->set($this->getAlias(), 'oauth_token',         $request['oauth_token'])
+                ->set($this->getAlias(), 'oauth_token_secret',  $request['oauth_verifier'])
+                ->set($this->getAlias(), 'user_id',             $request['user_id'])
+                ->set($this->getAlias(), 'screen_name',         $request['screen_name'])
+            ;
         }
     }
 
@@ -132,12 +196,15 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
         if (!isset($providers[$this->getAlias()]['consumer_key'], $providers[$this->getAlias()]['consumer_secret']))
             throw new InvalidArgumentException('Keys consumer_key and consumer_secret must be set in config');
 
-        $oauth = new \GuzzleHttp\Subscriber\Oauth\Oauth1(
-            array(
-                'consumer_key'      => $providers[$this->getAlias()]['consumer_key'],
-                'consumer_secret'   => $providers[$this->getAlias()]['consumer_secret'],
-            )
+        $params = array(
+            'consumer_key'      => $providers[$this->getAlias()]['consumer_key'],
+            'consumer_secret'   => $providers[$this->getAlias()]['consumer_secret'],
         );
+
+        if ($oauth_token = $this->getStorage()->get($this->getAlias(), 'oauth_token'))
+            $params['token'] = $oauth_token;
+
+        $oauth = new \GuzzleHttp\Subscriber\Oauth\Oauth1($params);
 
         $this->_http_client = new \GuzzleHttp\Client(
             array(

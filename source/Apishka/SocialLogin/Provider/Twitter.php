@@ -44,4 +44,16 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     {
         return 'https://api.twitter.com/oauth/authenticate';
     }
+
+    /**
+     * Returns oauth access url
+     *
+     * @access public
+     * @return string
+     */
+
+    public function getOauthAccessUrl()
+    {
+        return 'https://api.twitter.com/oauth/access_token';
+    }
 }
