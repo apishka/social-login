@@ -60,8 +60,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     protected function doAuthorizeRedirect()
     {
-        $url = \GuzzleHttp\url::fromString(rtrim($this->getOauthBaseUrl(), '/'));
-        $url->addPath($this->getOauthAuthorizeUrl());
+        $url = \GuzzleHttp\url::fromString($this->getOauthAuthorizeUrl());
         $url->setQuery(
             array(
                 'oauth_token' => $this->getStorage()->get($this->getAlias(), 'request_token'),
@@ -142,7 +141,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
         $this->_http_client = new \GuzzleHttp\Client(
             array(
-                'base_url' => $this->getOauthBaseUrl(),
                 'defaults' => ['auth' => 'oauth'],
             )
         );
@@ -150,16 +148,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
         $this->_http_client->getEmitter()->attach($oauth);
         //$this->_http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber());
     }
-
-    /**
-     * Returns api base url
-     *
-     * @abstract
-     * @access protected
-     * @return string
-     */
-
-    abstract protected function getOauthBaseUrl();
 
     /**
      * Returns api request url

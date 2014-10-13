@@ -22,18 +22,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     }
 
     /**
-     * Returns oauth base url
-     *
-     * @access public
-     * @return string
-     */
-
-    public function getOauthBaseUrl()
-    {
-        return 'https://api.twitter.com/';
-    }
-
-    /**
      * Returns oauth request url
      *
      * @access public
@@ -42,7 +30,7 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getOauthRequestUrl()
     {
-        return '/oauth/request_token';
+        return 'https://api.twitter.com/oauth/request_token';
     }
 
     /**
@@ -54,6 +42,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getOauthAuthorizeUrl()
     {
-        return '/oauth/authenticate';
+        return 'https://api.twitter.com/oauth/authenticate';
     }
 }
