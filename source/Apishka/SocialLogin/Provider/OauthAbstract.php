@@ -160,7 +160,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
             $this->getStorage()
                 ->set($this->getAlias(), 'oauth_token',         $request['oauth_token'])
-                ->set($this->getAlias(), 'oauth_token_secret',  $request['oauth_verifier'])
+                ->set($this->getAlias(), 'oauth_token_secret',  $request['oauth_token_secret'])
                 ->set($this->getAlias(), 'user_id',             $request['user_id'])
                 ->set($this->getAlias(), 'screen_name',         $request['screen_name'])
             ;
