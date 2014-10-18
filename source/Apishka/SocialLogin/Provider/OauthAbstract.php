@@ -246,4 +246,14 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
      */
 
     abstract protected function getOauthAuthorizeUrl();
+
+    /**
+     * Returns oauth access url
+     *
+     * @abstract
+     * @access public
+     * @return string
+     */
+
+    abstract public function getOauthAccessUrl();
 }
