@@ -28,26 +28,10 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     protected function doGetRequestToken()
     {
-        try
-        {
-            $result = $this->getHttpClient()->post(
-                $this->getOauthRequestUrl()
-            );
-        }
-        catch (GuzzleHttp\Exception\RequestException $exception)
-        {
-            //if ($exception->hasResponse()) {
-            //    echo $exception->getResponse();
-            //}
-            //die;
-
-            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
-        }
-
-        $result->getBody()->seek(0);
+        $url = \GuzzleHttp\Url::fromString($this->getOauthRequestUrl());
 
         parse_str(
-            $result->getBody()->getContents(),
+            $this->doPostRequest($url),
             $output
         );
 
@@ -63,7 +47,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     protected function doAuthorizeRedirect()
     {
-        $url = \GuzzleHttp\url::fromString($this->getOauthAuthorizeUrl());
+        $url = \GuzzleHttp\Url::fromString($this->getOauthAuthorizeUrl());
         $url->setQuery(
             array(
                 'oauth_token' => $this->getStorage()->get($this->getAlias(), 'request_token'),
@@ -83,33 +67,15 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     protected function doGetAccessToken()
     {
-        try
-        {
-            $result = $this->getHttpClient()->post(
-                $this->getOauthAccessUrl(),
-                array(
-                    'query' => array(
-                        'oauth_verifier' => $this->getStorage()->get(
-                            $this->getAlias(), 'oauth_verifier'
-                        )
-                    )
-                )
-            );
-        }
-        catch (GuzzleHttp\Exception\RequestException $exception)
-        {
-            if ($exception->hasResponse()) {
-                echo $exception->getResponse();
-            }
-            die;
-
-            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
-        }
-
-        $result->getBody()->seek(0);
+        $url = \GuzzleHttp\Url::fromString($this->getOauthAccessUrl());
+        $url->setQuery(
+            array(
+                'oauth_verifier' => $this->getStorage()->get($this->getAlias(), 'oauth_verifier'),
+            )
+        );
 
         parse_str(
-            $result->getBody()->getContents(),
+            $this->doPostRequest($url),
             $output
         );
 
@@ -176,6 +142,35 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     public function getAuthData()
     {
         return $this->getStorage()->get($this->getAlias(), 'auth_data');
+    }
+
+    /**
+     * Do post request
+     *
+     * @param \GuzzleHttp\Url   $url
+     * @access protected
+     * @return string
+     */
+
+    protected function doPostRequest(\GuzzleHttp\Url $url)
+    {
+        try
+        {
+            $result = $this->getHttpClient()->post($url);
+        }
+        catch (GuzzleHttp\Exception\RequestException $exception)
+        {
+            //if ($exception->hasResponse()) {
+            //    echo $exception->getResponse();
+            //}
+            //die;
+
+            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
+        }
+
+        $result->getBody()->seek(0);
+
+        return $result->getBody()->getContents();
     }
 
     /**
