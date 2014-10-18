@@ -56,6 +56,16 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     abstract public function getAuthData();
 
     /**
+     * Returns user info
+     *
+     * @abstract
+     * @access public
+     * @return Apishka_SocialLogin_User
+     */
+
+    abstract public function getUserInfo();
+
+    /**
      * Returns base
      *
      * @access protected

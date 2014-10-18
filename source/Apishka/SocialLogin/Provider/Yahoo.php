@@ -22,6 +22,17 @@ class Apishka_SocialLogin_Provider_Yahoo extends Apishka_SocialLogin_Provider_Oa
     }
 
     /**
+     * Returns user info
+     *
+     * @access public
+     * @return Apishka_SocialLogin_User
+     */
+
+    public function getUserInfo()
+    {
+    }
+
+    /**
      * Returns oauth request url
      *
      * @access public
