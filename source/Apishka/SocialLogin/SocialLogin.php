@@ -18,6 +18,15 @@ class Apishka_SocialLogin_SocialLogin
     private $_config = null;
 
     /**
+     * Providers cache
+     *
+     * @var array
+     * @access private
+     */
+
+    private $_providers_cache = array();
+
+    /**
      * Construct
      *
      * @param array     $config
