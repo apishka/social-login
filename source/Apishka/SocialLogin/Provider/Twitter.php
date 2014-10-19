@@ -30,16 +30,23 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getUserInfo()
     {
+        $data = json_decode($this->getProfileInfo(), true);
+
+        $user = new Apishka_SocialLogin_User();
+        foreach ($data as $key => $value)
+            $user->set($key, $value);
+
+        return $user;
     }
 
     /**
      * Returns oauth request url
      *
-     * @access public
+     * @access protected
      * @return string
      */
 
-    public function getOauthRequestUrl()
+    protected function getOauthRequestUrl()
     {
         return 'https://api.twitter.com/oauth/request_token';
     }
@@ -47,11 +54,11 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     /**
      * Returns oauth authorize url
      *
-     * @access public
+     * @access protected
      * @return string
      */
 
-    public function getOauthAuthorizeUrl()
+    protected function getOauthAuthorizeUrl()
     {
         return 'https://api.twitter.com/oauth/authenticate';
     }
@@ -59,12 +66,24 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     /**
      * Returns oauth access url
      *
-     * @access public
+     * @access protected
      * @return string
      */
 
-    public function getOauthAccessUrl()
+    protected function getOauthAccessUrl()
     {
         return 'https://api.twitter.com/oauth/access_token';
+    }
+
+    /**
+     * Returns profile url
+     *
+     * @access protected
+     * @return string
+     */
+
+    protected function getProfileInfoUrl()
+    {
+        return 'https://api.twitter.com/1.1/account/verify_credentials.json';
     }
 }

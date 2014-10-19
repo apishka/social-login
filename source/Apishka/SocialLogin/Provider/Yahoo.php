@@ -35,11 +35,11 @@ class Apishka_SocialLogin_Provider_Yahoo extends Apishka_SocialLogin_Provider_Oa
     /**
      * Returns oauth request url
      *
-     * @access public
+     * @access protected
      * @return string
      */
 
-    public function getOauthRequestUrl()
+    protected function getOauthRequestUrl()
     {
         return 'https://api.login.yahoo.com/oauth/v2/get_request_token';
     }
@@ -47,11 +47,11 @@ class Apishka_SocialLogin_Provider_Yahoo extends Apishka_SocialLogin_Provider_Oa
     /**
      * Returns oauth authorize url
      *
-     * @access public
+     * @access protected
      * @return string
      */
 
-    public function getOauthAuthorizeUrl()
+    protected function getOauthAuthorizeUrl()
     {
         return 'https://api.login.yahoo.com/oauth/v2/request_auth';
     }
@@ -59,11 +59,11 @@ class Apishka_SocialLogin_Provider_Yahoo extends Apishka_SocialLogin_Provider_Oa
     /**
      * Returns oauth access url
      *
-     * @access public
+     * @access protected
      * @return string
      */
 
-    public function getOauthAccessUrl()
+    protected function getOauthAccessUrl()
     {
         return 'https://api.login.yahoo.com/oauth/v2/get_token';
     }

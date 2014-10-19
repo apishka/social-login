@@ -88,4 +88,16 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     {
         return $this->getBase()->getStorage();
     }
+
+    /**
+     * Returns provider config
+     *
+     * @access protected
+     * @return string
+     */
+
+    protected function getProviderConfig()
+    {
+        return $this->getBase()->getConfig()['providers'][$this->getAlias()];
+    }
 }

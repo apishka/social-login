@@ -11,15 +11,6 @@
 abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_SocialLogin_ProviderAbstract
 {
     /**
-     * Http client
-     *
-     * @var \GuzzleHttp\Client
-     * @access private
-     */
-
-    private $_http_client = null;
-
-    /**
      * Do get request token
      *
      * @access protected
@@ -31,7 +22,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
         $url = \GuzzleHttp\Url::fromString($this->getOauthRequestUrl());
 
         parse_str(
-            $this->doPostRequest($url),
+            $this->makeRequest($url),
             $output
         );
 
@@ -75,7 +66,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
         );
 
         parse_str(
-            $this->doPostRequest($url),
+            $this->makeRequest($url, 'post', ['token' => $this->getStorage()->get($this->getAlias(), 'oauth_token')]),
             $output
         );
 
@@ -120,8 +111,8 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
             $request = $this->doGetAccessToken();
 
             $this->getStorage()
-                ->delete($this->getAlias(), 'oauth_token',     $_GET['oauth_token'])
-                ->delete($this->getAlias(), 'oauth_verifier',  $_GET['oauth_verifier'])
+                ->delete($this->getAlias(), 'oauth_token')
+                ->delete($this->getAlias(), 'oauth_verifier')
             ;
 
             $this->getStorage()
@@ -130,6 +121,29 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
                 ->set($this->getAlias(), 'auth_data',           $request)
             ;
         }
+
+        return $this;
+    }
+
+    /**
+     * Returns profile info
+     *
+     * @access protected
+     * @return void
+     */
+
+    protected function getProfileInfo()
+    {
+        $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
+
+        return $this->makeRequest(
+            $url,
+            'get',
+            array(
+                'token'         => $this->getStorage()->get($this->getAlias(), 'oauth_token'),
+                'token_secret'  => $this->getStorage()->get($this->getAlias(), 'oauth_token_secret'),
+            )
+        );
     }
 
     /**
@@ -145,25 +159,49 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     }
 
     /**
-     * Do post request
+     * Make request
      *
      * @param \GuzzleHttp\Url   $url
+     * @param string            $method
+     * @param array             $oauth_params
      * @access protected
      * @return string
      */
 
-    protected function doPostRequest(\GuzzleHttp\Url $url)
+    protected function makeRequest(\GuzzleHttp\Url $url, $method = 'post', array $oauth_params = array())
     {
+        if (!isset($this->getProviderConfig()['consumer_key'], $this->getProviderConfig()['consumer_secret']))
+            throw new InvalidArgumentException('Keys consumer_key and consumer_secret must be set in config');
+
+        $oauth_params = array_replace(
+            array(
+                'consumer_key'      => $this->getProviderConfig()['consumer_key'],
+                'consumer_secret'   => $this->getProviderConfig()['consumer_secret'],
+            ),
+            $oauth_params
+        );
+
+        $oauth = new \GuzzleHttp\Subscriber\Oauth\Oauth1($oauth_params);
+
+        $http_client = new \GuzzleHttp\Client(
+            array(
+                'defaults' => ['auth' => 'oauth'],
+            )
+        );
+
+        $http_client->getEmitter()->attach($oauth);
+        //$http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber());
+
         try
         {
-            $result = $this->getHttpClient()->post($url);
+            $result = $http_client->$method($url);
         }
         catch (GuzzleHttp\Exception\RequestException $exception)
         {
-            //if ($exception->hasResponse()) {
-            //    echo $exception->getResponse();
-            //}
-            //die;
+            if ($exception->hasResponse()) {
+                echo $exception->getResponse();
+            }
+            die;
 
             throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
         }
@@ -171,55 +209,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
         $result->getBody()->seek(0);
 
         return $result->getBody()->getContents();
-    }
-
-    /**
-     * Returns http client
-     *
-     * @access protected
-     * @return string
-     */
-
-    protected function getHttpClient()
-    {
-        if ($this->_http_client === null)
-            $this->initHttpClient();
-
-        return $this->_http_client;
-    }
-
-    /**
-     * Init http client
-     *
-     * @access protected
-     * @return void
-     */
-
-    protected function initHttpClient()
-    {
-        $providers = $this->getBase()->getConfig()['providers'];
-
-        if (!isset($providers[$this->getAlias()]['consumer_key'], $providers[$this->getAlias()]['consumer_secret']))
-            throw new InvalidArgumentException('Keys consumer_key and consumer_secret must be set in config');
-
-        $params = array(
-            'consumer_key'      => $providers[$this->getAlias()]['consumer_key'],
-            'consumer_secret'   => $providers[$this->getAlias()]['consumer_secret'],
-        );
-
-        if ($oauth_token = $this->getStorage()->get($this->getAlias(), 'oauth_token'))
-            $params['token'] = $oauth_token;
-
-        $oauth = new \GuzzleHttp\Subscriber\Oauth\Oauth1($params);
-
-        $this->_http_client = new \GuzzleHttp\Client(
-            array(
-                'defaults' => ['auth' => 'oauth'],
-            )
-        );
-
-        $this->_http_client->getEmitter()->attach($oauth);
-        //$this->_http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber());
     }
 
     /**
@@ -246,9 +235,9 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
      * Returns oauth access url
      *
      * @abstract
-     * @access public
+     * @access protected
      * @return string
      */
 
-    abstract public function getOauthAccessUrl();
+    abstract protected function getOauthAccessUrl();
 }
