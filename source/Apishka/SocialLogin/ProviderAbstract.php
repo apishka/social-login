@@ -100,4 +100,43 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     {
         return $this->getBase()->getConfig()['providers'][$this->getAlias()];
     }
+
+    /**
+     * Init callback url
+     *
+     * @access protected
+     * @return void
+     */
+
+    protected function initCallbackUrl()
+    {
+        if ($this->getStorage()->get($this->getAlias(), 'callback_url'))
+            return;
+
+        $this->getStorage()
+            ->set($this->getAlias(), $this->getCallbackUrl())
+        ;
+    }
+
+    /**
+     * Returns callback url
+     *
+     * @access protected
+     * @return string
+     */
+
+    protected function getCallbackUrl()
+    {
+        if ($this->getProviderConfig()['callback_url'])
+            return $this->getProviderConfig()['callback_url'];
+
+        $url = 'http';
+
+        if ($_SERVER['HTTPS'])
+            $url .= 's';
+
+        $url .= '://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+        return $url;
+    }
 }
