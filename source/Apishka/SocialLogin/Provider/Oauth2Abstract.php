@@ -71,9 +71,12 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
         }
         else
         {
-            $data = $this->doAccessTokenRequest();
+            $request = json_decode($this->doAccessTokenRequest());
 
-            var_dump($data);
+            $this->getStorage()
+                ->set($this->getAlias(), 'access_token',        $request['access_token'])
+                ->set($this->getAlias(), 'auth_data',           $request)
+            ;
         }
     }
 
