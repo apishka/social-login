@@ -46,14 +46,16 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     }
 
     /**
-     * Returns abstract data
+     * Returns auth data
      *
-     * @abstract
      * @access public
      * @return array
      */
 
-    abstract public function getAuthData();
+    public function getAuthData()
+    {
+        return $this->getStorage()->get($this->getAlias(), 'auth_data');
+    }
 
     /**
      * Returns user info
@@ -110,11 +112,15 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
 
     protected function initCallbackUrl()
     {
-        if ($this->getStorage()->get($this->getAlias(), 'callback_url'))
-            return;
+        $url = 'http';
+
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'])
+            $url .= 's';
+
+        $url .= '://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         $this->getStorage()
-            ->set($this->getAlias(), $this->getCallbackUrl())
+            ->set($this->getAlias(), 'callback_url', $url)
         ;
     }
 
@@ -130,13 +136,9 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
         if (isset($this->getProviderConfig()['callback_url']))
             return $this->getProviderConfig()['callback_url'];
 
-        $url = 'http';
+        if (!$this->getStorage()->get($this->getAlias(), 'callback_url'))
+            $this->initCallbackUrl();
 
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'])
-            $url .= 's';
-
-        $url .= '://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-
-        return $url;
+        return $this->getStorage()->get($this->getAlias(), 'callback_url');
     }
 }

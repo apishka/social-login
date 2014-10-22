@@ -84,8 +84,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     public function auth()
     {
-        $this->initCallbackUrl();
-
         if (!$this->getStorage()->get($this->getAlias(), 'request_token'))
         {
             $request = $this->doGetRequestToken();
@@ -151,18 +149,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     }
 
     /**
-     * Returns auth data
-     *
-     * @access public
-     * @return array
-     */
-
-    public function getAuthData()
-    {
-        return $this->getStorage()->get($this->getAlias(), 'auth_data');
-    }
-
-    /**
      * Make request
      *
      * @param \GuzzleHttp\Url   $url
@@ -181,7 +167,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
             array(
                 'consumer_key'      => $this->getProviderConfig()['consumer_key'],
                 'consumer_secret'   => $this->getProviderConfig()['consumer_secret'],
-                'callback'          => $this->getStorage()->get($this->getAlias(), 'callback_url'),
+                'callback'          => $this->getCallbackUrl(),
             ),
             $oauth_params
         );
