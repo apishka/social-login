@@ -127,12 +127,12 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
 
     protected function getCallbackUrl()
     {
-        if ($this->getProviderConfig()['callback_url'])
+        if (isset($this->getProviderConfig()['callback_url']))
             return $this->getProviderConfig()['callback_url'];
 
         $url = 'http';
 
-        if ($_SERVER['HTTPS'])
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'])
             $url .= 's';
 
         $url .= '://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
