@@ -48,8 +48,10 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
             $user->set($key, $value);
 
         $user
-            ->set('avatar',         $user->profile_image_url_https)
             ->set('fullname',       $user->name)
+            ->set('login',          $user->screen_name)
+            ->set('gender',         Apishka_SocialLogin_User::GENDER_ALL)
+            ->set('avatar',         $user->profile_image_url_https)
         ;
 
         return $user;
