@@ -43,17 +43,19 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     public function doAccessTokenRequest()
     {
         $url = \GuzzleHttp\Url::fromString($this->getOauthAccessTokenUrl());
-        $url->setQuery(
+
+        return $this->makeRequest(
+            $url, 
+            'post',
             array(
                 'client_id'     => $this->getProviderConfig()['client_id'],
                 'client_secret' => $this->getProviderConfig()['client_secret'],
                 'code'          => $_GET['code'],
                 'redirect_uri'  => $this->getCallbackUrl(),
                 'response_type' => 'code',
+                'grant_type'    => 'authorization_code',
             )
         );
-
-        return $this->makeRequest($url, 'post');
     }
 
     /**
@@ -99,20 +101,37 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
      *
      * @param \GuzzleHttp\Url   $url
      * @param string            $method
-     * @param array             $oauth_params
+     * @param array             $post_params
      * @access protected
      * @return string
      */
 
-    protected function makeRequest(\GuzzleHttp\Url $url, $method = 'get')
+    protected function makeRequest(\GuzzleHttp\Url $url, $method = 'get', array $post_params = array())
     {
         $http_client = new \GuzzleHttp\Client();
 
-        //$http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber(null, \GuzzleHttp\Subscriber\Log\Formatter::DEBUG));
+        $http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber(null, \GuzzleHttp\Subscriber\Log\Formatter::DEBUG));
 
         try
         {
-            $result = $http_client->$method($url);
+            switch ($method)
+            {
+                case 'get':
+                    $result = $http_client->get($url);
+                    break;
+
+                case 'post':
+                    $result = $http_client->post(
+                        $url,
+                        array(
+                            'body' => $post_params,
+                        )
+                    );
+                    break;
+
+                default:
+                    throw new Apishka_SocialLogin_Exception();
+            }
         }
         catch (GuzzleHttp\Exception\RequestException $exception)
         {
