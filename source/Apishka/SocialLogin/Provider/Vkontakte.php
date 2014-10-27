@@ -53,7 +53,7 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
             ->set('fullname',       $user->first_name . ' ' . $user->last_name)
             ->set('gender',         $user->sex)
             ->set('login',          $user->nickname)
-            ->set('birthdate',      $user->birthdate)
+            ->set('birthdate',      $user->bdate)
         ;
 
         return $user;

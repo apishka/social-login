@@ -53,7 +53,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
             )
         );
 
-        return $this->makeRequest($url);
+        return $this->makeRequest($url, 'post');
     }
 
     /**
