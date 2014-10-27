@@ -110,7 +110,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     {
         $http_client = new \GuzzleHttp\Client();
 
-        $http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber(null, \GuzzleHttp\Subscriber\Log\Formatter::DEBUG));
+        //$http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber(null, \GuzzleHttp\Subscriber\Log\Formatter::DEBUG));
 
         try
         {
