@@ -128,27 +128,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     }
 
     /**
-     * Returns profile info
-     *
-     * @access protected
-     * @return void
-     */
-
-    protected function getProfileInfo()
-    {
-        $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
-
-        return $this->makeRequest(
-            $url,
-            'get',
-            array(
-                'token'         => $this->getStorage()->get($this->getAlias(), 'oauth_token'),
-                'token_secret'  => $this->getStorage()->get($this->getAlias(), 'oauth_token_secret'),
-            )
-        );
-    }
-
-    /**
      * Make request
      *
      * @param \GuzzleHttp\Url   $url

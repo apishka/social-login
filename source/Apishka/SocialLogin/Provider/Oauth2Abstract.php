@@ -60,7 +60,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
      * Auth
      *
      * @access public
-     * @return string
+     * @return Apishka_SocialLogin_ProviderAbstract
      */
 
     public function auth()
@@ -71,13 +71,15 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
         }
         else
         {
-            $request = json_decode($this->doAccessTokenRequest());
+            $request = json_decode($this->doAccessTokenRequest(), true);
 
             $this->getStorage()
                 ->set($this->getAlias(), 'access_token',        $request['access_token'])
                 ->set($this->getAlias(), 'auth_data',           $request)
             ;
         }
+
+        return $this;
     }
 
     /**
@@ -102,7 +104,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
      * @return string
      */
 
-    protected function makeRequest(\GuzzleHttp\Url $url, $method = 'post')
+    protected function makeRequest(\GuzzleHttp\Url $url, $method = 'get')
     {
         $http_client = new \GuzzleHttp\Client();
 

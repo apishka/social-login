@@ -30,15 +30,26 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getUserInfo()
     {
-        $data = json_decode($this->getProfileInfo(), true);
+        $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
+
+        $info = $this->makeRequest(
+            $url,
+            'get',
+            array(
+                'token'         => $this->getStorage()->get($this->getAlias(), 'oauth_token'),
+                'token_secret'  => $this->getStorage()->get($this->getAlias(), 'oauth_token_secret'),
+            )
+        );
+
+        $data = json_decode($info, true);
 
         $user = new Apishka_SocialLogin_User();
         foreach ($data as $key => $value)
             $user->set($key, $value);
 
         $user
-            ->set('avatar',     str_replace('https:', '', $user->profile_image_url_https))
-            ->set('fullname',   $user->name)
+            ->set('avatar',         $user->profile_image_url_https)
+            ->set('fullname',       $user->name)
         ;
 
         return $user;

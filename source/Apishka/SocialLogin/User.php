@@ -3,11 +3,28 @@
 /**
  * Apishka social login user
  *
+ * Fields:
+ *  id
+ *  fullname
+ *  login
+ *  email
+ *  gender
+ *  avatar
+ *  birthdate
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_User
 {
+    /**
+     * Constants
+     */
+
+    const GENDER_ALL    = 0;
+    const GENDER_FEMALE = 1;
+    const GENDER_MALE   = 2;
+
     /**
      * Data
      *
