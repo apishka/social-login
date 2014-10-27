@@ -69,8 +69,8 @@ class Apishka_SocialLogin_SocialLogin
     {
         if (!array_key_exists($alias, $this->_providers_cache))
         {
-            if (!array_key_exists($alias, $this->getConfig()['providers']))
-                throw new InvalidArgumentException('Provider ' . var_export($alias) . ' not present in config');
+            if (!isset($this->getConfig()['providers'][$alias]['class']))
+                throw new InvalidArgumentException('Provider ' . var_export($alias, true) . ' not exists in config');
 
             $class =  $this->getConfig()['providers'][$alias]['class'];
 
