@@ -1,21 +1,25 @@
 <?php
 
 return array (
-  'storage' => 
+  'storage' =>
   array (
     'class' => 'Apishka_SocialLogin_Storage_Session',
   ),
-  'providers' => 
+  'providers' =>
   array (
-    'twitter' => 
+    'twitter' =>
     array (
       'class' => 'Apishka_SocialLogin_Provider_Twitter',
     ),
-    'vkontakte' => 
+    'yandex' =>
+    array (
+      'class' => 'Apishka_SocialLogin_Provider_Yandex',
+    ),
+    'vkontakte' =>
     array (
       'class' => 'Apishka_SocialLogin_Provider_Vkontakte',
     ),
-    'yahoo' => 
+    'yahoo' =>
     array (
       'class' => 'Apishka_SocialLogin_Provider_Yahoo',
     ),
