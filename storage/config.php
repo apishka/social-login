@@ -7,6 +7,10 @@ return array (
   ),
   'providers' => 
   array (
+    'mailru' => 
+    array (
+      'class' => 'Apishka_SocialLogin_Provider_Mailru',
+    ),
     'twitter' => 
     array (
       'class' => 'Apishka_SocialLogin_Provider_Twitter',
