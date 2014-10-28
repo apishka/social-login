@@ -114,6 +114,8 @@ class Apishka_GenerateConfigCommand extends \Symfony\Component\Console\Command\C
             );
         }
 
+        ksort($this->_result['providers']);
+
         return $this;
     }
 
