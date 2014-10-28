@@ -43,7 +43,7 @@ class Apishka_SocialLogin_Provider_Yandex extends Apishka_SocialLogin_Provider_O
         $data = json_decode($info, true);
 
         $user = new Apishka_SocialLogin_User();
-        foreach ($data['response'][0] as $key => $value)
+        foreach ($data as $key => $value)
             $user->set($key, $value);
 
         $user
