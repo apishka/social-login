@@ -45,7 +45,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
         $url = \GuzzleHttp\Url::fromString($this->getOauthAccessTokenUrl());
 
         return $this->makeRequest(
-            $url, 
+            $url,
             'post',
             array(
                 'client_id'     => $this->getProviderConfig()['client_id'],
