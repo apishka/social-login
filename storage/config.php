@@ -11,6 +11,10 @@ return array (
     array (
       'class' => 'Apishka_SocialLogin_Provider_Facebook',
     ),
+    'google' => 
+    array (
+      'class' => 'Apishka_SocialLogin_Provider_Google',
+    ),
     'mailru' => 
     array (
       'class' => 'Apishka_SocialLogin_Provider_Mailru',
