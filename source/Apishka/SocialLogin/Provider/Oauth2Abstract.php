@@ -52,7 +52,6 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
                 'client_secret' => $this->getProviderConfig()['client_secret'],
                 'code'          => $_GET['code'],
                 'redirect_uri'  => $this->getCallbackUrl(),
-                'response_type' => 'code',
                 'grant_type'    => 'authorization_code',
             )
         );
