@@ -17,6 +17,7 @@
         "ext-curl": "*",
         "guzzlehttp/guzzle": "~4.2",
         "guzzlehttp/oauth-subscriber": "0.1.*",
+        "facebook/php-sdk": "~3.2",
         "guzzlehttp/log-subscriber": "~1.0"
     },
     "require-dev": {
