@@ -88,7 +88,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
      * Returns scope
      *
      * @access protected
-     * @return void
+     * @return string
      */
 
     protected function getScope()
