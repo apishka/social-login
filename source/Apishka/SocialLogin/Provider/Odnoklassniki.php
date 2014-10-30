@@ -31,11 +31,13 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
     public function getUserInfo()
     {
         $params = array(
-            'application_key'   => $this->getProviderConfig()['client_id'],
-            'method'        => 'users.getCurrentUser',
+            'application_key'   => $this->getProviderConfig()['client_key'],
+            'method'            => 'users.getCurrentUser',
+            'fields'            => 'uid,first_name,last_name,name,gender,age,birthday,pic_4,email',
         );
 
         $params['sig'] = $this->buildSignature($params);
+        $params['access_token'] = $this->getStorage()->get($this->getAlias(), 'access_token');
 
         $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
         $url->setQuery($params);
@@ -79,7 +81,7 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
 
         return md5($sig);
     }
-    
+
     /**
      * Returns scope
      *
