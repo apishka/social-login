@@ -19,6 +19,10 @@ return array (
     array (
       'class' => 'Apishka_SocialLogin_Provider_Mailru',
     ),
+    'odnoklassniki' => 
+    array (
+      'class' => 'Apishka_SocialLogin_Provider_Odnoklassniki',
+    ),
     'twitter' => 
     array (
       'class' => 'Apishka_SocialLogin_Provider_Twitter',
