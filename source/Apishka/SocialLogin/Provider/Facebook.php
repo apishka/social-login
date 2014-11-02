@@ -113,14 +113,21 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
             )
         ;
 
-        foreach ($me->asArray() as $key => $value)
-            $user->set($key, $value);
+        $data = $me->asArray();
+
+        $user = new Apishka_SocialLogin_User($data);
 
         $user
-            ->set('avatar',         'https://graph.facebook.com/' . $user->id . '/picture?type=large')
-            ->set('fullname',       $user->name)
-            ->set('gender',         $user->gender == 'female' ? Apishka_SocialLogin_User::GENDER_FEMALE : Apishka_SocialLogin_User::GENDER_MALE)
-            ->set('birthdate',      $user->birthday)
+            ->setId($data['id'])
+            ->setEmail($data['email'])
+            ->setAvatar('https://graph.facebook.com/' . $data['id'] . '/picture?type=large')
+            ->setFullname($data['name'])
+            ->setGender(
+                $data['gender'] == 'female'
+                    ? Apishka_SocialLogin_User::GENDER_FEMALE
+                    : Apishka_SocialLogin_User::GENDER_MALE
+            )
+            ->setBirthday($data['birthday'])
         ;
 
         return $user;
