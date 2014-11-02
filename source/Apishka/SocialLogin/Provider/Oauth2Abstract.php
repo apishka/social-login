@@ -74,6 +74,9 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
         {
             $request = json_decode($this->doAccessTokenRequest(), true);
 
+            if (!array_key_exists('access_token', $request))
+                throw new Apishka_SocialLogin_Exception('Error in request');
+
             $this->getStorage()
                 ->set($this->getAlias(), 'access_token',        $request['access_token'])
                 ->set($this->getAlias(), 'auth_data',           $request)
@@ -134,10 +137,10 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
         }
         catch (GuzzleHttp\Exception\RequestException $exception)
         {
-            if ($exception->hasResponse()) {
-                echo $exception->getResponse();
-            }
-            die;
+            //if ($exception->hasResponse()) {
+            //    echo $exception->getResponse();
+            //}
+            //die;
 
             throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
         }
