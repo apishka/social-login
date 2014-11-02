@@ -41,17 +41,23 @@ class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_O
 
         $data = json_decode($info, true);
 
-        $user = new Apishka_SocialLogin_User();
-        foreach ($data as $key => $value)
-            $user->set($key, $value);
+        if (!isset($data['id']))
+            throw new Apishka_SocialLogin_Exception('Data retrieval error');
+
+        $user = new Apishka_SocialLogin_User($data);
 
         $user
-            ->set('avatar',         $user->image['url'])
-            ->set('fullname',       $user->name['givenName'] . ' ' . $user->name['familyName'])
-            ->set('gender',         $user->gender == 'female' ? Apishka_SocialLogin_User::GENDER_FEMALE : Apishka_SocialLogin_User::GENDER_MALE)
-            ->set('login',          $user->nickname)
-            ->set('birthdate',      $user->birthday)
-            ->set('email',          $user->emails[0]['value'])
+            ->setId($data['id'])
+            ->setAvatar($data['image']['url'])
+            ->setFullname($data['name']['givenName'] . ' ' . $data['name']['familyName'])
+            ->setGender(
+                $data['gender'] == 'female'
+                    ? Apishka_SocialLogin_User::GENDER_FEMALE
+                    : Apishka_SocialLogin_User::GENDER_MALE
+            )
+            ->setLogin($data['nickname'])
+            ->setBirthday($data['birthday'])
+            ->setEmail($data['emails'][0]['value'])
         ;
 
         return $user;
