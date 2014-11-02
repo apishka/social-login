@@ -43,15 +43,13 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
         $data = json_decode($info, true);
 
-        $user = new Apishka_SocialLogin_User();
-        foreach ($data as $key => $value)
-            $user->set($key, $value);
+        $user = new Apishka_SocialLogin_User($data);
 
         $user
-            ->set('fullname',       $user->name)
-            ->set('login',          $user->screen_name)
-            ->set('gender',         Apishka_SocialLogin_User::GENDER_ALL)
-            ->set('avatar',         $user->profile_image_url_https)
+            ->setId($data['id'])
+            ->setFullname($data['name'])
+            ->setLogin($data['screen_name'])
+            ->setAvatar($data['profile_image_url_https'])
         ;
 
         return $user;
