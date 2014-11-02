@@ -36,7 +36,7 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
             'fields'            => 'uid,first_name,last_name,name,gender,age,birthday,pic_4,email',
         );
 
-        $params['sig'] = $this->buildSignature($params);
+        $params['sig']          = $this->buildSignature($params);
         $params['access_token'] = $this->getStorage()->get($this->getAlias(), 'access_token');
 
         $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
@@ -46,16 +46,18 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
 
         $data = json_decode($info, true);
 
-        $user = new Apishka_SocialLogin_User();
-        foreach ($data as $key => $value)
-            $user->set($key, $value);
+        $user = new Apishka_SocialLogin_User($data);
 
         $user
-            ->set('id',             $user->uid)
-            ->set('avatar',         $user->pic1024max)
-            ->set('fullname',       $user->name)
-            ->set('gender',         $user->gender == 'male' ? Apishka_SocialLogin_User::GENDER_MALE : Apishka_SocialLogin_User::GENDER_FEMALE)
-            ->set('birthdate',      $user->birthday)
+            ->setId($data['uid'])
+            ->setAvatar($data['pic_4'])
+            ->setFullname($data['name'])
+            ->setGender(
+                $data['gender'] == 'male'
+                    ? Apishka_SocialLogin_User::GENDER_MALE
+                    : Apishka_SocialLogin_User::GENDER_FEMALE
+            )
+            ->setBirthday($data['birthday'])
         ;
 
         return $user;
