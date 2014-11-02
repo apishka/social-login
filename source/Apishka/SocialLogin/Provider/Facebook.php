@@ -138,7 +138,7 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
      *
      * @param \Facebook\FacebookSession     $session
      * @access private
-     * @return Apishka_SocialLogin_User this
+     * @return Apishka_SocialLogin_Provider_Facebook this
      */
 
     private function setFacebookSession(\Facebook\FacebookSession $session)
