@@ -42,18 +42,19 @@ class Apishka_SocialLogin_Provider_Yandex extends Apishka_SocialLogin_Provider_O
 
         $data = json_decode($info, true);
 
-        $user = new Apishka_SocialLogin_User();
-        foreach ($data as $key => $value)
-            $user->set($key, $value);
+        $user = new Apishka_SocialLogin_User($data);
 
         $user
-            ->set('id',             $user->uid)
-            ->set('avatar',         $user->photo_big)
-            ->set('fullname',       $user->real_name)
-            ->set('gender',         $user->sex == 'female' ? Apishka_SocialLogin_User::GENDER_FEMALE : Apishka_SocialLogin_User::GENDER_MALE)
-            ->set('login',          $user->nickname)
-            ->set('birthdate',      $user->birthday)
-            ->set('email',          $user->default_email)
+            ->setId($data['id'])
+            ->setFullname($data['real_name'])
+            ->setGender(
+                $data['sex'] == 'female'
+                    ? Apishka_SocialLogin_User::GENDER_FEMALE
+                    : Apishka_SocialLogin_User::GENDER_MALE
+            )
+            ->setLogin($data['login'])
+            ->setBirthday($data['birthday'])
+            ->setEmail($data['default_email'])
         ;
 
         return $user;
