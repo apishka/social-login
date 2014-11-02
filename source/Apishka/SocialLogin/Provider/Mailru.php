@@ -45,19 +45,23 @@ class Apishka_SocialLogin_Provider_Mailru extends Apishka_SocialLogin_Provider_O
 
         $info = $this->makeRequest($url);
 
-        $data = json_decode($info, true);
+        $decoded = json_decode($info, true);
+        $data = $decoded[0];
 
-        $user = new Apishka_SocialLogin_User();
-        foreach ($data['response'][0] as $key => $value)
-            $user->set($key, $value);
+        $user = new Apishka_SocialLogin_User($data);
 
         $user
-            ->set('id',             $user->uid)
-            ->set('avatar',         $user->pic)
-            ->set('fullname',       $user->first_name . ' ' . $user->last_name)
-            ->set('gender',         $user->sex == 0 ? Apishka_SocialLogin_User::GENDER_MALE : Apishka_SocialLogin_User::GENDER_FEMALE)
-            ->set('login',          $user->nick)
-            ->set('birthdate',      $user->birthday)
+            ->setId($data['uid'])
+            ->setEmail($data['email'])
+            ->setAvatar($data['pic'])
+            ->setFullname($data['first_name'] . ' ' . $data['last_name'])
+            ->setGender(
+                $data['sex'] == 0
+                    ? Apishka_SocialLogin_User::GENDER_MALE
+                    : Apishka_SocialLogin_User::GENDER_FEMALE
+            )
+            ->setLogin($data['nick'])
+            ->setBirthday($data['birthday'])
         ;
 
         return $user;
