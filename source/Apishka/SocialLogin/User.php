@@ -71,6 +71,9 @@ class Apishka_SocialLogin_User
 
     public function getId()
     {
+        if (!isset($this->_normalized['id']))
+            return null;
+
         return $this->_normalized['id'];
     }
 
@@ -98,6 +101,9 @@ class Apishka_SocialLogin_User
 
     public function getFullname()
     {
+        if (!isset($this->_normalized['fullname']))
+            return null;
+
         return $this->_normalized['fullname'];
     }
 
@@ -125,6 +131,9 @@ class Apishka_SocialLogin_User
 
     public function getLogin()
     {
+        if (!isset($this->_normalized['login']))
+            return null;
+
         return $this->_normalized['login'];
     }
 
@@ -152,6 +161,9 @@ class Apishka_SocialLogin_User
 
     public function getEmail()
     {
+        if (!isset($this->_normalized['email']))
+            return null;
+
         return $this->_normalized['email'];
     }
 
@@ -179,6 +191,9 @@ class Apishka_SocialLogin_User
 
     public function getGender()
     {
+        if (!isset($this->_normalized['gender']))
+            return null;
+
         return $this->_normalized['gender'];
     }
 
@@ -206,6 +221,9 @@ class Apishka_SocialLogin_User
 
     public function getAvatar()
     {
+        if (!isset($this->_normalized['avatar']))
+            return null;
+
         return $this->_normalized['avatar'];
     }
 
@@ -219,7 +237,14 @@ class Apishka_SocialLogin_User
 
     public function setBirthday($birthday)
     {
-        $this->_normalized['birthday'] = $birthday;
+        try
+        {
+            $this->_normalized['birthday'] = new DateTime($birthday);
+        }
+        catch (Exception $e)
+        {
+            return $this;
+        }
 
         return $this;
     }
@@ -228,11 +253,14 @@ class Apishka_SocialLogin_User
      * Returns birthday
      *
      * @access public
-     * @return datetime
+     * @return DateTime
      */
 
     public function getBirthday()
     {
+        if (!isset($this->_normalized['birthday']))
+            return null;
+
         return $this->_normalized['birthday'];
     }
 
