@@ -41,19 +41,22 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
 
         $info = $this->makeRequest($url);
 
-        $data = json_decode($info, true);
+        $decode = json_decode($info, true);
+        $data = $decode['response'][0];
 
-        $user = new Apishka_SocialLogin_User();
-        foreach ($data['response'][0] as $key => $value)
-            $user->set($key, $value);
+        $user = new Apishka_SocialLogin_User($data);
 
         $user
-            ->set('id',             $user->uid)
-            ->set('avatar',         $user->photo_big)
-            ->set('fullname',       $user->first_name . ' ' . $user->last_name)
-            ->set('gender',         $user->sex)
-            ->set('login',          $user->nickname)
-            ->set('birthdate',      $user->bdate)
+            ->setId($data['uid'])
+            ->setAvatar($data['photo_big'])
+            ->setFullname($data['first_name'] . ' ' . $data['last_name'])
+            ->setGender(
+                $data['sex'] == 2
+                    ? Apishka_SocialLogin_User::GENDER_MALE
+                    : Apishka_SocialLogin_User::GENDER_FEMALE
+            )
+            ->setLogin($data['nickname'])
+            ->setBirthday($data['bdate'])
         ;
 
         return $user;
