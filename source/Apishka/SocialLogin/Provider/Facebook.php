@@ -71,7 +71,7 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
                 header('Location: ' . $url, true, 302);
             }
         }
-        catch(\Facebook\FacebookRequestException $ex)
+        catch(\Facebook\FacebookException $ex)
         {
             throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
         }
@@ -143,6 +143,10 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
 
     private function setFacebookSession(\Facebook\FacebookSession $session)
     {
+        $this->getStorage()
+            ->set($this->getAlias(), 'auth_data',           $session->getSignedRequestData())
+        ;
+
         $this->_facebook_session = $session;
 
         return $this;
