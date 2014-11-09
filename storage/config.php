@@ -15,6 +15,10 @@ return array (
     array (
       'class' => 'Apishka_SocialLogin_Provider_Google',
     ),
+    'linkedin' => 
+    array (
+      'class' => 'Apishka_SocialLogin_Provider_Linkedin',
+    ),
     'mailru' => 
     array (
       'class' => 'Apishka_SocialLogin_Provider_Mailru',
@@ -30,10 +34,6 @@ return array (
     'vkontakte' => 
     array (
       'class' => 'Apishka_SocialLogin_Provider_Vkontakte',
-    ),
-    'yahoo' => 
-    array (
-      'class' => 'Apishka_SocialLogin_Provider_Yahoo',
     ),
     'yandex' => 
     array (

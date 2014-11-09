@@ -70,7 +70,7 @@ class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_O
      * @return string
      */
 
-    protected function getScope()
+    protected function getOauthScope()
     {
         return 'https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/plus.profile.emails.read';
     }

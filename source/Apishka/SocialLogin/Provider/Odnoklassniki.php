@@ -91,7 +91,7 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
      * @return string
      */
 
-    protected function getScope()
+    protected function getOauthScope()
     {
         return 'GET_EMAIL';
     }
