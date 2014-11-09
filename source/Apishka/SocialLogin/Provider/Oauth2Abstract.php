@@ -19,13 +19,20 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
 
     public function doAuthorizeRedirect()
     {
+        $state = $this->getOauthState();
+
+        $this->getStorage()
+            ->set($this->getAlias(), 'provider_state', $state)
+        ;
+
         $url = \GuzzleHttp\Url::fromString($this->getOauthAuthorizeUrl());
         $url->setQuery(
             array(
                 'client_id'     => $this->getProviderConfig()['client_id'],
-                'scope'         => $this->getScope(),
+                'scope'         => $this->getOauthScope(),
                 'redirect_uri'  => $this->getCallbackUrl(),
                 'response_type' => 'code',
+                'state'         => $state,
             )
         );
 
@@ -66,16 +73,25 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
 
     public function auth()
     {
-        if (!isset($_GET['code']))
+        if ($this->getStorage()->get($this->getAlias(), 'provider_state') === null)
         {
             $this->doAuthorizeRedirect();
         }
         else
         {
+            $this->getStorage()
+                ->delete($this->getAlias(), 'provider_state')
+            ;
+
+            if (!isset($_GET['state']))
+                throw new Apishka_SocialLogin_Exception('Error in request: state not found');
+
+            $this->checkOauthState($_GET['state']);
+
             $request = json_decode($this->doAccessTokenRequest(), true);
 
             if (!array_key_exists('access_token', $request))
-                throw new Apishka_SocialLogin_Exception('Error in request');
+                throw new Apishka_SocialLogin_Exception('Error in request: access_token not found');
 
             $this->getStorage()
                 ->set($this->getAlias(), 'access_token',        $request['access_token'])
@@ -93,9 +109,41 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
      * @return string
      */
 
-    protected function getScope()
+    protected function getOauthScope()
     {
         return '';
+    }
+
+    /**
+     * Returns oauth state
+     *
+     * @param string    $time
+     * @access protected
+     * @return string
+     */
+
+    protected function getOauthState($time = 'now')
+    {
+        return md5($this->getAlias() . date('H', strtotime($time)));
+    }
+
+    /**
+     * Check oauth state
+     *
+     * @param string    $state
+     * @access protected
+     * @return void
+     */
+
+    protected function checkOauthState($state)
+    {
+        if ($state == $this->getOauthState('now'))
+            return;
+
+        if ($state == $this->getOauthState('-1 hour'))
+            return;
+
+        throw new Apishka_SocialLogin_Exception('Wrong state');
     }
 
     /**
