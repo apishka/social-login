@@ -30,6 +30,9 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
 
     public function getUserInfo()
     {
+        if (!array_key_exists('client_key', $this->getProviderConfig()))
+            throw new Apishka_SocialLogin_Exception('For odnoklassniki you have to define client_key in provider config');
+
         $params = array(
             'application_key'   => $this->getProviderConfig()['client_key'],
             'method'            => 'users.getCurrentUser',
@@ -45,6 +48,9 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
         $info = $this->makeRequest($url);
 
         $data = json_decode($info, true);
+
+        if (!array_key_exists('uid', $data))
+            throw new Apishka_SocialLogin_Exception('API error: ' . var_export($info, true));
 
         $user = new Apishka_SocialLogin_User($data);
 
