@@ -114,7 +114,7 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     {
         $url = 'http';
 
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'])
+        if ($_SERVER['HTTP_X_FORWARDED_SCHEME'] == 'https' || $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || isset($_SERVER['HTTPS']))
             $url .= 's';
 
         $url .= '://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
