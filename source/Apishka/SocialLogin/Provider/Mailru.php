@@ -55,6 +55,8 @@ class Apishka_SocialLogin_Provider_Mailru extends Apishka_SocialLogin_Provider_O
             ->setEmail($data['email'])
             ->setAvatar($data['pic'])
             ->setFullname($data['first_name'] . ' ' . $data['last_name'])
+            ->setFirstName($data['first_name'])
+            ->setLastName($data['last_name'])
             ->setGender(
                 $data['sex'] == 0
                     ? Apishka_SocialLogin_User::GENDER_MALE

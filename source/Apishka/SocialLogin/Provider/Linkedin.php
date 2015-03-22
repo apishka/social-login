@@ -52,6 +52,8 @@ class Apishka_SocialLogin_Provider_Linkedin extends Apishka_SocialLogin_Provider
         $user
             ->setId($data['id'])
             ->setFullname($data['firstName'] . ' ' . $data['lastName'])
+            ->setFirstName($data['firstName'])
+            ->setLastName($data['lastName'])
             ->setBirthday($dob)
             ->setEmail($data['emailAddress'])
             ->setAvatar($data['pictureUrl'])

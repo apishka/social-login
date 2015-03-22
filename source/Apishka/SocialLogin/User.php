@@ -108,6 +108,66 @@ class Apishka_SocialLogin_User
     }
 
     /**
+     * Sets first name
+     *
+     * @param string    $name
+     * @access public
+     * @return Apishka_SocialLogin_User this
+     */
+
+    public function setFirstName($name)
+    {
+        $this->_normalized['first_name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Returns first name
+     *
+     * @access public
+     * @return string
+     */
+
+    public function getFirstName()
+    {
+        if (!isset($this->_normalized['first_name']))
+            return null;
+
+        return $this->_normalized['first_name'];
+    }
+
+    /**
+     * Sets last name
+     *
+     * @param string    $name
+     * @access public
+     * @return Apishka_SocialLogin_User this
+     */
+
+    public function setLastName($name)
+    {
+        $this->_normalized['last_name'] = $name;
+
+        return $this;
+    }
+
+    /**
+     * Returns last name
+     *
+     * @access public
+     * @return string
+     */
+
+    public function getLastName()
+    {
+        if (!isset($this->_normalized['last_name']))
+            return null;
+
+        return $this->_normalized['last_name'];
+    }
+
+    /**
      * Set login
      *
      * @param string    $login

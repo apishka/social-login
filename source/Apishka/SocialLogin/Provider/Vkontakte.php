@@ -50,6 +50,8 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
             ->setId($data['uid'])
             ->setAvatar($data['photo_big'])
             ->setFullname($data['first_name'] . ' ' . $data['last_name'])
+            ->setFirstName($data['first_name'])
+            ->setLastName($data['last_name'])
             ->setGender(
                 $data['sex'] == 2
                     ? Apishka_SocialLogin_User::GENDER_MALE

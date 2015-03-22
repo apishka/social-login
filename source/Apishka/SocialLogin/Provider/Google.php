@@ -50,6 +50,8 @@ class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_O
             ->setId($data['id'])
             ->setAvatar($data['image']['url'])
             ->setFullname($data['name']['givenName'] . ' ' . $data['name']['familyName'])
+            ->setFirstName($data['name']['givenName'])
+            ->setLastName($data['name']['familyName'])
             ->setGender(
                 $data['gender'] == 'female'
                     ? Apishka_SocialLogin_User::GENDER_FEMALE

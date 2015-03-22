@@ -122,6 +122,8 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
             ->setEmail($data['email'])
             ->setAvatar('https://graph.facebook.com/' . $data['id'] . '/picture?type=large')
             ->setFullname($data['name'])
+            ->setFirstName($data['first_name'])
+            ->setLastName($data['last_name'])
             ->setGender(
                 $data['gender'] == 'female'
                     ? Apishka_SocialLogin_User::GENDER_FEMALE

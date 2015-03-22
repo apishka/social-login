@@ -58,6 +58,8 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
             ->setId($data['uid'])
             ->setAvatar($data['pic_4'])
             ->setFullname($data['name'])
+            ->setFirstName($data['first_name'])
+            ->setLastName($data['last_name'])
             ->setGender(
                 $data['gender'] == 'male'
                     ? Apishka_SocialLogin_User::GENDER_MALE
