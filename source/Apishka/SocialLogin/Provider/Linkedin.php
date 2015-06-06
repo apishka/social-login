@@ -4,6 +4,7 @@
  * Apishka social login provider: linkedin
  *
  * @uses    Apishka_SocialLogin_Provider_OauthAbstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -12,7 +13,6 @@ class Apishka_SocialLogin_Provider_Linkedin extends Apishka_SocialLogin_Provider
     /**
      * Returns alias
      *
-     * @access public
      * @return string
      */
 
@@ -24,7 +24,6 @@ class Apishka_SocialLogin_Provider_Linkedin extends Apishka_SocialLogin_Provider
     /**
      * Returns user info
      *
-     * @access public
      * @return Apishka_SocialLogin_User
      */
 
@@ -45,8 +44,8 @@ class Apishka_SocialLogin_Provider_Linkedin extends Apishka_SocialLogin_Provider
         $user = new Apishka_SocialLogin_User($data);
 
         $dob = count($data['dateOfBirth'] == 2)
-            ? join('-', $data['dateOfBirth']) . '-0000'
-            : join('-', $data['dateOfBirth'])
+            ? implode('-', $data['dateOfBirth']) . '-0000'
+            : implode('-', $data['dateOfBirth'])
         ;
 
         $user
@@ -65,7 +64,6 @@ class Apishka_SocialLogin_Provider_Linkedin extends Apishka_SocialLogin_Provider
     /**
      * Returns oauth authorize url
      *
-     * @access protected
      * @return string
      */
 
@@ -77,7 +75,6 @@ class Apishka_SocialLogin_Provider_Linkedin extends Apishka_SocialLogin_Provider
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 
@@ -89,7 +86,6 @@ class Apishka_SocialLogin_Provider_Linkedin extends Apishka_SocialLogin_Provider
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 

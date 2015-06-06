@@ -11,9 +11,9 @@ interface Apishka_SocialLogin_StorageInterface
     /**
      * Set value
      *
-     * @param string    $key
-     * @param mixed     $value
-     * @access public
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return Apishka_SocialLogin_StorageInterface
      */
 
@@ -22,8 +22,8 @@ interface Apishka_SocialLogin_StorageInterface
     /**
      * Get value
      *
-     * @param string    $key
-     * @access public
+     * @param string $key
+     *
      * @return mixed
      */
 
@@ -32,8 +32,8 @@ interface Apishka_SocialLogin_StorageInterface
     /**
      * Delete
      *
-     * @param string    $key
-     * @access public
+     * @param string $key
+     *
      * @return Apishka_SocialLogin_StorageInterface
      */
 

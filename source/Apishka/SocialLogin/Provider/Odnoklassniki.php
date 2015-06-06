@@ -4,6 +4,7 @@
  * Apishka social login provider: odnoklassniki
  *
  * @uses    Apishka_SocialLogin_Provider_OauthAbstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -12,7 +13,6 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
     /**
      * Returns alias
      *
-     * @access public
      * @return string
      */
 
@@ -24,7 +24,6 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
     /**
      * Returns user info
      *
-     * @access public
      * @return Apishka_SocialLogin_User
      */
 
@@ -74,8 +73,8 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
     /**
      * Build signature
      *
-     * @param array     $params
-     * @access private
+     * @param array $params
+     *
      * @return string
      */
 
@@ -95,7 +94,6 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
     /**
      * Returns scope
      *
-     * @access protected
      * @return string
      */
 
@@ -107,7 +105,6 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
     /**
      * Returns oauth authorize url
      *
-     * @access protected
      * @return string
      */
 
@@ -119,7 +116,6 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 
@@ -131,7 +127,6 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 

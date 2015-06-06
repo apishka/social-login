@@ -4,6 +4,7 @@
  * Apishka social login provider: facebook
  *
  * @uses    Apishka_SocialLogin_ProviderAbstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -13,7 +14,6 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
      * Default scope
      *
      * @var array
-     * @access private
      */
 
     private $_default_scope = array(
@@ -26,7 +26,6 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
      * Facebook session
      *
      * @var \Facebook\FacebookSession
-     * @access private
      */
 
     private $_facebook_session = null;
@@ -34,7 +33,6 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     /**
      * Returns alias
      *
-     * @access public
      * @return string
      */
 
@@ -46,7 +44,6 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     /**
      * Auth
      *
-     * @access public
      * @return Apishka_SocialLogin_ProviderAbstract
      */
 
@@ -85,7 +82,6 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     /**
      * Returns scope
      *
-     * @access protected
      * @return array
      */
 
@@ -100,7 +96,6 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     /**
      * Returns user info
      *
-     * @access public
      * @return Apishka_SocialLogin_User
      */
 
@@ -138,8 +133,8 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     /**
      * Set facebook session
      *
-     * @param \Facebook\FacebookSession     $session
-     * @access private
+     * @param \Facebook\FacebookSession $session
+     *
      * @return Apishka_SocialLogin_Provider_Facebook this
      */
 
@@ -157,7 +152,6 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     /**
      * Returns facebook session
      *
-     * @access private
      * @return \Facebook\FacebookSession
      */
 

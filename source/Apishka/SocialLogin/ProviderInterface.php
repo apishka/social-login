@@ -11,7 +11,6 @@ interface Apishka_SocialLogin_ProviderInterface
     /**
      * Returns alias for provider
      *
-     * @access public
      * @return string
      */
 

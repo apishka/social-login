@@ -12,7 +12,6 @@ class Apishka_SocialLogin_SocialLogin
      * Config
      *
      * @var array
-     * @access private
      */
 
     private $_config = null;
@@ -21,7 +20,6 @@ class Apishka_SocialLogin_SocialLogin
      * Providers cache
      *
      * @var array
-     * @access private
      */
 
     private $_providers_cache = array();
@@ -29,9 +27,7 @@ class Apishka_SocialLogin_SocialLogin
     /**
      * Construct
      *
-     * @param array     $config
-     * @access public
-     * @return void
+     * @param array $config
      */
 
     public function __construct(array $config)
@@ -42,8 +38,8 @@ class Apishka_SocialLogin_SocialLogin
     /**
      * Initialize
      *
-     * @param array     $config
-     * @access protected
+     * @param array $config
+     *
      * @return Apishka_SocialLogin_SocialLogin this
      */
 
@@ -60,8 +56,8 @@ class Apishka_SocialLogin_SocialLogin
     /**
      * Returns provider
      *
-     * @param string    $alias
-     * @access public
+     * @param string $alias
+     *
      * @return Apishka_SocialLogin_ProviderInterface
      */
 
@@ -87,7 +83,6 @@ class Apishka_SocialLogin_SocialLogin
     /**
      * Returns config
      *
-     * @access public
      * @return array
      */
 
@@ -99,7 +94,6 @@ class Apishka_SocialLogin_SocialLogin
     /**
      * Returns storage
      *
-     * @access public
      * @return Apishka_SocialLogin_StorageInterface
      */
 
@@ -116,7 +110,6 @@ class Apishka_SocialLogin_SocialLogin
     /**
      * Returns path to config file
      *
-     * @access protected
      * @return string
      */
 

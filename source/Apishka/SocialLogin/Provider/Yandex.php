@@ -4,6 +4,7 @@
  * Apishka social login provider: yandex
  *
  * @uses    Apishka_SocialLogin_Provider_OauthAbstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -12,7 +13,6 @@ class Apishka_SocialLogin_Provider_Yandex extends Apishka_SocialLogin_Provider_O
     /**
      * Returns alias
      *
-     * @access public
      * @return string
      */
 
@@ -24,7 +24,6 @@ class Apishka_SocialLogin_Provider_Yandex extends Apishka_SocialLogin_Provider_O
     /**
      * Returns user info
      *
-     * @access public
      * @return Apishka_SocialLogin_User
      */
 
@@ -63,7 +62,6 @@ class Apishka_SocialLogin_Provider_Yandex extends Apishka_SocialLogin_Provider_O
     /**
      * Returns oauth authorize url
      *
-     * @access protected
      * @return string
      */
 
@@ -75,7 +73,6 @@ class Apishka_SocialLogin_Provider_Yandex extends Apishka_SocialLogin_Provider_O
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 
@@ -87,7 +84,6 @@ class Apishka_SocialLogin_Provider_Yandex extends Apishka_SocialLogin_Provider_O
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 

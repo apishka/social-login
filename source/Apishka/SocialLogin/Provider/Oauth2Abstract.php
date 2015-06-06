@@ -5,6 +5,7 @@
  *
  * @uses    Apishka_SocialLogin_ProviderAbstract
  * @abstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -12,9 +13,6 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
 {
     /**
      * Do authorize redirect
-     *
-     * @access public
-     * @return void
      */
 
     public function doAuthorizeRedirect()
@@ -43,7 +41,6 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     /**
      * Do access token request
      *
-     * @access public
      * @return array
      */
 
@@ -67,7 +64,6 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     /**
      * Auth
      *
-     * @access public
      * @return Apishka_SocialLogin_ProviderAbstract
      */
 
@@ -105,7 +101,6 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     /**
      * Returns scope
      *
-     * @access protected
      * @return string
      */
 
@@ -117,8 +112,8 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     /**
      * Returns oauth state
      *
-     * @param string    $time
-     * @access protected
+     * @param string $time
+     *
      * @return string
      */
 
@@ -130,9 +125,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     /**
      * Check oauth state
      *
-     * @param string    $state
-     * @access protected
-     * @return void
+     * @param string $state
      */
 
     protected function checkOauthState($state)
@@ -149,10 +142,10 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     /**
      * Make request
      *
-     * @param \GuzzleHttp\Url   $url
-     * @param string            $method
-     * @param array             $post_params
-     * @access protected
+     * @param \GuzzleHttp\Url $url
+     * @param string          $method
+     * @param array           $post_params
+     *
      * @return string
      */
 

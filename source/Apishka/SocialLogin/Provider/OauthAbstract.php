@@ -5,6 +5,7 @@
  *
  * @uses    Apishka_SocialLogin_ProviderAbstract
  * @abstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -13,7 +14,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Do get request token
      *
-     * @access protected
      * @return array
      */
 
@@ -31,9 +31,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     /**
      * Do authorize
-     *
-     * @access protected
-     * @return void
      */
 
     protected function doAuthorizeRedirect()
@@ -52,7 +49,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Do get access token
      *
-     * @access protected
      * @return array
      */
 
@@ -78,7 +74,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Auth
      *
-     * @access public
      * @return string
      */
 
@@ -130,10 +125,10 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Make request
      *
-     * @param \GuzzleHttp\Url   $url
-     * @param string            $method
-     * @param array             $oauth_params
-     * @access protected
+     * @param \GuzzleHttp\Url $url
+     * @param string          $method
+     * @param array           $oauth_params
+     *
      * @return string
      */
 
@@ -185,7 +180,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
      * Returns api request url
      *
      * @abstract
-     * @access protected
+     *
      * @return string
      */
 
@@ -195,7 +190,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
      * Returns authorize url
      *
      * @abstract
-     * @access protected
+     *
      * @return string
      */
 
@@ -205,7 +200,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
      * Returns oauth access url
      *
      * @abstract
-     * @access protected
+     *
      * @return string
      */
 

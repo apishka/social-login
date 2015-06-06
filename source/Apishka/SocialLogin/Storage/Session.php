@@ -4,6 +4,7 @@
  * Apishka social login storage session
  *
  * @uses    Apishka_SocialLogin_StorageInterface
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -17,9 +18,6 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
 
     /**
      * Construct
-     *
-     * @access public
-     * @return void
      */
 
     public function __construct()
@@ -34,9 +32,9 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
     /**
      * Set value
      *
-     * @param string    $key
-     * @param mixed     $value
-     * @access public
+     * @param string $key
+     * @param mixed  $value
+     *
      * @return Apishka_SocialLogin_StorageInterface
      */
 
@@ -44,7 +42,7 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
     {
         $args   = func_get_args();
         $value  = array_pop($args);
-        $key    = join(':', $args);
+        $key    = implode(':', $args);
 
         $_SESSION[self::STORAGE_PREFIX][$key] = $value;
 
@@ -54,17 +52,17 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
     /**
      * Get value
      *
-     * @param string    $key
-     * @access public
+     * @param string $key
+     *
      * @return mixed
      */
 
     public function get()
     {
-        $key = join(':', func_get_args());
+        $key = implode(':', func_get_args());
 
         if (!array_key_exists($key, $_SESSION[self::STORAGE_PREFIX]))
-            return null;
+            return;
 
         return $_SESSION[self::STORAGE_PREFIX][$key];
     }
@@ -72,14 +70,14 @@ class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_Storage
     /**
      * Delete
      *
-     * @param string    $key
-     * @access public
+     * @param string $key
+     *
      * @return Apishka_SocialLogin_StorageInterface
      */
 
     public function delete()
     {
-        $key = join(':', func_get_args());
+        $key = implode(':', func_get_args());
 
         unset($_SESSION[self::STORAGE_PREFIX][$key]);
 

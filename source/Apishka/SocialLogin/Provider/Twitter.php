@@ -4,6 +4,7 @@
  * Apishka social login provider: twitter
  *
  * @uses    Apishka_SocialLogin_Provider_OauthAbstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -12,7 +13,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     /**
      * Returns alias
      *
-     * @access public
      * @return string
      */
 
@@ -24,7 +24,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     /**
      * Returns user info
      *
-     * @access public
      * @return Apishka_SocialLogin_User
      */
 
@@ -58,7 +57,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     /**
      * Returns oauth request url
      *
-     * @access protected
      * @return string
      */
 
@@ -70,7 +68,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     /**
      * Returns oauth authorize url
      *
-     * @access protected
      * @return string
      */
 
@@ -82,7 +79,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     /**
      * Returns oauth access url
      *
-     * @access protected
      * @return string
      */
 
@@ -94,7 +90,6 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 

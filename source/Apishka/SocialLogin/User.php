@@ -20,7 +20,6 @@ class Apishka_SocialLogin_User
      * Data
      *
      * @var array
-     * @access private
      */
 
     private $_data = array();
@@ -29,16 +28,12 @@ class Apishka_SocialLogin_User
      * Normalized
      *
      * @var array
-     * @access private
      */
 
     private $_normalized = array();
 
     /**
      * Construct
-     *
-     * @access public
-     * @return void
      */
 
     public function __construct(array $data = array(), array $normalized = array())
@@ -50,8 +45,8 @@ class Apishka_SocialLogin_User
     /**
      * Sets id
      *
-     * @param string    $id
-     * @access public
+     * @param string $id
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -65,14 +60,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns id
      *
-     * @access public
      * @return string
      */
 
     public function getId()
     {
         if (!isset($this->_normalized['id']))
-            return null;
+            return;
 
         return $this->_normalized['id'];
     }
@@ -80,8 +74,8 @@ class Apishka_SocialLogin_User
     /**
      * Sets fullname
      *
-     * @param string    $name
-     * @access public
+     * @param string $name
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -95,14 +89,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns fullname
      *
-     * @access public
      * @return string
      */
 
     public function getFullname()
     {
         if (!isset($this->_normalized['fullname']))
-            return null;
+            return;
 
         return $this->_normalized['fullname'];
     }
@@ -110,8 +103,8 @@ class Apishka_SocialLogin_User
     /**
      * Sets first name
      *
-     * @param string    $name
-     * @access public
+     * @param string $name
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -125,14 +118,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns first name
      *
-     * @access public
      * @return string
      */
 
     public function getFirstName()
     {
         if (!isset($this->_normalized['first_name']))
-            return null;
+            return;
 
         return $this->_normalized['first_name'];
     }
@@ -140,8 +132,8 @@ class Apishka_SocialLogin_User
     /**
      * Sets last name
      *
-     * @param string    $name
-     * @access public
+     * @param string $name
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -155,14 +147,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns last name
      *
-     * @access public
      * @return string
      */
 
     public function getLastName()
     {
         if (!isset($this->_normalized['last_name']))
-            return null;
+            return;
 
         return $this->_normalized['last_name'];
     }
@@ -170,8 +161,8 @@ class Apishka_SocialLogin_User
     /**
      * Set login
      *
-     * @param string    $login
-     * @access public
+     * @param string $login
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -185,14 +176,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns login
      *
-     * @access public
      * @return string
      */
 
     public function getLogin()
     {
         if (!isset($this->_normalized['login']))
-            return null;
+            return;
 
         return $this->_normalized['login'];
     }
@@ -200,8 +190,8 @@ class Apishka_SocialLogin_User
     /**
      * Set email
      *
-     * @param string    $email
-     * @access public
+     * @param string $email
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -215,14 +205,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns email
      *
-     * @access public
      * @return string
      */
 
     public function getEmail()
     {
         if (!isset($this->_normalized['email']))
-            return null;
+            return;
 
         return $this->_normalized['email'];
     }
@@ -230,8 +219,8 @@ class Apishka_SocialLogin_User
     /**
      * Set gender
      *
-     * @param string    $gender
-     * @access public
+     * @param string $gender
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -245,14 +234,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns gender
      *
-     * @access public
      * @return string
      */
 
     public function getGender()
     {
         if (!isset($this->_normalized['gender']))
-            return null;
+            return;
 
         return $this->_normalized['gender'];
     }
@@ -260,8 +248,8 @@ class Apishka_SocialLogin_User
     /**
      * Set avatar
      *
-     * @param string    $avatar
-     * @access public
+     * @param string $avatar
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -275,14 +263,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns avatar
      *
-     * @access public
      * @return string
      */
 
     public function getAvatar()
     {
         if (!isset($this->_normalized['avatar']))
-            return null;
+            return;
 
         return $this->_normalized['avatar'];
     }
@@ -290,8 +277,8 @@ class Apishka_SocialLogin_User
     /**
      * Set birthday
      *
-     * @param string    $birthday
-     * @access public
+     * @param string $birthday
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -312,14 +299,13 @@ class Apishka_SocialLogin_User
     /**
      * Returns birthday
      *
-     * @access public
      * @return DateTime
      */
 
     public function getBirthday()
     {
         if (!isset($this->_normalized['birthday']))
-            return null;
+            return;
 
         return $this->_normalized['birthday'];
     }
@@ -327,8 +313,8 @@ class Apishka_SocialLogin_User
     /**
      * Set data
      *
-     * @param array     $data
-     * @access public
+     * @param array $data
+     *
      * @return Apishka_SocialLogin_User this
      */
 
@@ -342,7 +328,6 @@ class Apishka_SocialLogin_User
     /**
      * Returns original data
      *
-     * @access public
      * @return array
      */
 

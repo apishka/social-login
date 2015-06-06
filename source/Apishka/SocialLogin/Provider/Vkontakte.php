@@ -4,6 +4,7 @@
  * Apishka social login provider: vkontakte
  *
  * @uses    Apishka_SocialLogin_Provider_OauthAbstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -12,7 +13,6 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
     /**
      * Returns alias
      *
-     * @access public
      * @return string
      */
 
@@ -24,7 +24,6 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
     /**
      * Returns user info
      *
-     * @access public
      * @return Apishka_SocialLogin_User
      */
 
@@ -67,7 +66,6 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
     /**
      * Returns oauth authorize url
      *
-     * @access protected
      * @return string
      */
 
@@ -79,7 +77,6 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 
@@ -91,7 +88,6 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
     /**
      * Returns profile url
      *
-     * @access protected
      * @return string
      */
 

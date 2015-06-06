@@ -5,6 +5,7 @@
  *
  * @uses    Apishka_SocialLogin_ProviderInterface
  * @abstract
+ *
  * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
@@ -14,16 +15,12 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
      * Base class
      *
      * @var Apishka_SocialLogin_SocialLogin
-     * @access private
      */
 
     private $_base = null;
 
     /**
      * Construct
-     *
-     * @access public
-     * @return void
      */
 
     public function __construct()
@@ -34,7 +31,7 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
      * Initialze
      *
      * @param Apishka_SocialLogin_SocialLogin $base
-     * @access public
+     *
      * @return Apishka_SocialLogin_ProviderInterface
      */
 
@@ -48,7 +45,6 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     /**
      * Returns auth data
      *
-     * @access public
      * @return array
      */
 
@@ -61,7 +57,7 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
      * Returns user info
      *
      * @abstract
-     * @access public
+     *
      * @return Apishka_SocialLogin_User
      */
 
@@ -70,7 +66,6 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     /**
      * Returns base
      *
-     * @access protected
      * @return Apishka_SocialLogin_SocialLogin
      */
 
@@ -81,9 +76,6 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
 
     /**
      * getStorage
-     *
-     * @access protected
-     * @return void
      */
 
     protected function getStorage()
@@ -94,7 +86,6 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     /**
      * Returns provider config
      *
-     * @access protected
      * @return string
      */
 
@@ -105,9 +96,6 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
 
     /**
      * Init callback url
-     *
-     * @access protected
-     * @return void
      */
 
     protected function initCallbackUrl()
@@ -117,7 +105,7 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
         if ($_SERVER['HTTP_X_FORWARDED_SCHEME'] == 'https' || $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || isset($_SERVER['HTTPS']))
             $url .= 's';
 
-        $url .= '://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        $url .= '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
         $this->getStorage()
             ->set($this->getAlias(), 'callback_url', $url)
@@ -127,7 +115,6 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     /**
      * Returns callback url
      *
-     * @access protected
      * @return string
      */
 
