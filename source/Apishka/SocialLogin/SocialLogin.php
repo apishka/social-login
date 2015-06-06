@@ -104,7 +104,7 @@ class Apishka_SocialLogin_SocialLogin
 
         $class = $this->getConfig()['storage']['class'];
 
-        return new $class();
+        return $class::apishka();
     }
 
     /**

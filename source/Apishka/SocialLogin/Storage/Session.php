@@ -11,6 +11,12 @@
 class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_StorageInterface
 {
     /**
+     * Traits
+     */
+
+    use Apishka\EasyExtend\Helper\ByClassNameTrait;
+
+    /**
      * Constants
      */
 
