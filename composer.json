@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.6",
-        "apishka/easy-extend": "~1.0.0",
+        "apishka/easy-extend": "~1",
         "guzzlehttp/guzzle": "~5.0",
         "guzzlehttp/oauth-subscriber": "0.2.*",
         "commerceguys/guzzle-oauth2-plugin": "~2.0",
