@@ -63,18 +63,15 @@ class Apishka_SocialLogin_SocialLogin
 
     public function getProvider($alias)
     {
-        if (!array_key_exists($alias, $this->_providers_cache))
+        try
         {
-            if (!isset($this->getConfig()['providers'][$alias]['class']))
-                throw new InvalidArgumentException('Provider ' . var_export($alias, true) . ' not exists in config');
-
-            $class =  $this->getConfig()['providers'][$alias]['class'];
-
-            $object = new $class();
-
-            $this->_providers_cache[$alias] = $object
+            $this->_providers_cache[$alias] = Apishka_SocialLogin_ProviderRouter::apishka()->getItem($alias)
                 ->initialize($this)
             ;
+        }
+        catch (LogicException $e)
+        {
+            throw Apishka_SocialLogin_Exception($e->getMessage());
         }
 
         return $this->_providers_cache[$alias];
