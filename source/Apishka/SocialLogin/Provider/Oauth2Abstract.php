@@ -31,6 +31,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
                 'redirect_uri'  => $this->getCallbackUrl(),
                 'response_type' => 'code',
                 'state'         => $state,
+                'access_type'   => 'offline',
             )
         );
 
@@ -93,9 +94,97 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
                 ->set($this->getAlias(), 'access_token',        $request['access_token'])
                 ->set($this->getAlias(), 'auth_data',           $request)
             ;
+
+            if (array_key_exists('refresh_token', $request))
+            {
+                $this->getStorage()
+                    ->set($this->getAlias(), 'refresh_token', $request['refresh_token'])
+                ;
+            }
         }
 
         return $this;
+    }
+
+    /**
+     * Refresh
+     *
+     * @return Apishka_SocialLogin_ProviderAbstract
+     */
+
+    public function refresh()
+    {
+        $request = json_decode($this->doRefreshTokenRequest(), true);
+
+        if (!array_key_exists('access_token', $request))
+            throw new Apishka_SocialLogin_Exception('Error in refresh request: access_token not found');
+
+        $this->getStorage()
+            ->set($this->getAlias(), 'access_token',        $request['access_token'])
+            ->set($this->getAlias(), 'auth_data',           $request)
+        ;
+
+        if (array_key_exists('refresh_token', $request))
+        {
+            $this->getStorage()
+                ->set($this->getAlias(), 'refresh_token', $request['refresh_token'])
+            ;
+        }
+
+        return $this;
+    }
+
+    /**
+     * Do access token request
+     *
+     * @return array
+     */
+
+    public function doRefreshTokenRequest()
+    {
+        $url = \GuzzleHttp\Url::fromString($this->getOauthAccessTokenUrl());
+
+        return $this->makeRequest(
+            $url,
+            'post',
+            array(
+                'client_id'     => $this->getProviderConfig()['client_id'],
+                'client_secret' => $this->getProviderConfig()['client_secret'],
+                'refresh_token' => $this->getRefreshToken(),
+                'redirect_uri'  => $this->getCallbackUrl(),
+                'grant_type'    => 'refresh_token',
+            )
+        );
+    }
+
+    /**
+     * Set refresh token
+     *
+     * @param string $refresh_token
+     *
+     * @return Apishka_SocialLogin_ProviderAbstract
+     */
+
+    public function setRefreshToken($refresh_token)
+    {
+        $this->getStorage()
+            ->set($this->getAlias(), 'refresh_token', $refresh_token)
+        ;
+
+        return $this;
+    }
+
+    /**
+     * Get refresh token
+     *
+     * @return string
+     */
+
+    public function getRefreshToken()
+    {
+        return $this->getStorage()
+            ->get($this->getAlias(), 'refresh_token')
+        ;
     }
 
     /**

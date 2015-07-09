@@ -97,7 +97,7 @@ class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_O
 
     protected function getOauthAccessTokenUrl()
     {
-        return 'https://accounts.google.com/o/oauth2/token';
+        return 'https://www.googleapis.com/oauth2/v3/token';
     }
 
     /**
