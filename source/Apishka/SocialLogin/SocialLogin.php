@@ -65,7 +65,7 @@ class Apishka_SocialLogin_SocialLogin
     {
         try
         {
-            $this->_providers_cache[$alias] = $this->getRouter()->getItem($alias)
+            $this->_providers_cache[$alias] = Apishka_SocialLogin_ProviderRouter::apishka()->getItem($alias)
                 ->initialize($this)
             ;
         }
@@ -75,17 +75,6 @@ class Apishka_SocialLogin_SocialLogin
         }
 
         return $this->_providers_cache[$alias];
-    }
-
-    /**
-     * Get router
-     *
-     * @return Apishka_SocialLogin_ProviderRouter
-     */
-
-    protected function getRouter()
-    {
-        return \Apishka\EasyExtend\Broker::getInstance()->getItem('Apishka_SocialLogin_ProviderRouter');
     }
 
     /**
