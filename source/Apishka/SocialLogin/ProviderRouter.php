@@ -20,9 +20,6 @@ class Apishka_SocialLogin_ProviderRouter extends \Apishka\EasyExtend\Router\ByKe
 
     protected function isCorrectItem(\ReflectionClass $reflector)
     {
-        if (!parent::isCorrectItem($reflector))
-            return false;
-
         return $this->hasClassInterface($reflector, 'Apishka_SocialLogin_ProviderInterface');
     }
 
