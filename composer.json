@@ -17,7 +17,6 @@
         "apishka/easy-extend": "^1.2.5",
         "guzzlehttp/guzzle": "~5.0",
         "guzzlehttp/oauth-subscriber": "0.2.*",
-        "commerceguys/guzzle-oauth2-plugin": "~2.0",
         "facebook/php-sdk-v4": "4.0.*"
     },
     "require-dev": {
