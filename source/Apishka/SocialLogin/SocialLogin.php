@@ -71,7 +71,7 @@ class Apishka_SocialLogin_SocialLogin
         }
         catch (LogicException $e)
         {
-            throw Apishka_SocialLogin_Exception($e->getMessage());
+            throw new Apishka_SocialLogin_Exception($e->getMessage());
         }
 
         return $this->_providers_cache[$alias];
