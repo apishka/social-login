@@ -23,9 +23,9 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     );
 
     /**
-     * Facebook session
+     * Facebook token
      *
-     * @var \Facebook\FacebookSession
+     * @var \Facebook\Authentication\AccessToken
      */
 
     private $_facebook_token = null;
@@ -72,7 +72,7 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
         }
 
         if ($token)
-            $this->setFacebookSession($token);
+            $this->setFacebookToken($token);
 
         return $this;
     }
@@ -114,9 +114,8 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
             throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
         }
 
-        $user = new Apishka_SocialLogin_User(
-            $response->getGraphUser()
-        );
+        $data = $response->getGraphUser()->asArray();
+        $user = new Apishka_SocialLogin_User($data);
 
         $user
             ->setId($data['id'])
@@ -152,7 +151,7 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     }
 
     /**
-     * Set facebook session
+     * Set facebook token
      *
      * @param \Facebook\Authentication\AccessToken $token
      *
@@ -172,9 +171,9 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     }
 
     /**
-     * Returns facebook session
+     * Returns facebook token
      *
-     * @return \Facebook\FacebookSession
+     * @return \Facebook\Authentication\AccessToken
      */
 
     private function getFacebookToken()
