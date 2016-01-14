@@ -87,8 +87,8 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
 
     protected function getScope()
     {
-        if (isset($this->getProviderConfig['scope']))
-            return $this->getProviderConfig['scope'];
+        if (isset($this->getProviderConfig()['scope']))
+            return $this->getProviderConfig()['scope'];
 
         return $this->_default_scope;
     }
