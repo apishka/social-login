@@ -163,6 +163,7 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
         $this->getStorage()
             ->set($this->getAlias(), 'access_token',    $token->getValue())
             ->set($this->getAlias(), 'expiresAt',       $token->getExpiresAt())
+            ->set($this->getAlias(), 'auth_data',       ['access_token' => $token->getValue(), 'expiresAt' => $token->expiresAt()])
         ;
 
         $this->_facebook_token = $token;
