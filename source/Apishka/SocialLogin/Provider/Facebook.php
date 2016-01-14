@@ -28,7 +28,7 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
      * @var \Facebook\FacebookSession
      */
 
-    private $_facebook_session = null;
+    private $_facebook_token = null;
 
     /**
      * Returns alias
@@ -49,32 +49,30 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
 
     public function auth()
     {
-        \Facebook\FacebookSession::setDefaultApplication(
-            $this->getProviderConfig()['client_id'],
-            $this->getProviderConfig()['client_secret']
-        );
+        $fb     = $this->getFBObject();
+        $helper = $fb->getRedirectLoginHelper();
 
-        $helper = new \Facebook\FacebookRedirectLoginHelper($this->getCallbackUrl());
         try
         {
-            $session = $helper->getSessionFromRedirect();
+            $token = $helper->getAccessToken();
 
-            if ($session === null)
+            if ($token === null)
             {
                 $url = $helper->getLoginUrl(
+                    $this->getCallbackUrl(),
                     $this->getScope()
                 );
 
                 header('Location: ' . $url, true, 302);
             }
         }
-        catch(\Facebook\FacebookException $ex)
+        catch(\Facebook\Exceptions\FacebookSDKException $ex)
         {
             throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
         }
 
-        if ($session)
-            $this->setFacebookSession($session);
+        if ($token)
+            $this->setFacebookSession($token);
 
         return $this;
     }
@@ -101,16 +99,24 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
 
     public function getUserInfo()
     {
-        $me = (new \Facebook\FacebookRequest($this->getFacebookSession(), 'GET', '/me'))
-            ->execute()
-            ->getGraphObject(
-                \Facebook\GraphUser::className()
-            )
-        ;
+        $fb     = $this->getFBObject();
 
-        $data = $me->asArray();
+        try
+        {
+            $response = $fb->get('/me?fields=id,name,email,gender', $this->getFacebookToken()->getValue());
+        }
+        catch(Facebook\Exceptions\FacebookResponseException $exception)
+        {
+            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
+        }
+        catch(Facebook\Exceptions\FacebookSDKException $exception)
+        {
+            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
+        }
 
-        $user = new Apishka_SocialLogin_User($data);
+        $user = new Apishka_SocialLogin_User(
+            $response->getGraphUser()
+        );
 
         $user
             ->setId($data['id'])
@@ -131,20 +137,36 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     }
 
     /**
+     * Get facebook object
+     *
+     * @return \Facebook\Facebook
+     */
+
+    private function getFBObject()
+    {
+        return new \Facebook\Facebook([
+            'app_id' => $this->getProviderConfig()['client_id'],
+            'app_secret' => $this->getProviderConfig()['client_secret'],
+            'default_graph_version' => 'v2.2',
+        ]);
+    }
+
+    /**
      * Set facebook session
      *
-     * @param \Facebook\FacebookSession $session
+     * @param \Facebook\Authentication\AccessToken $token
      *
      * @return Apishka_SocialLogin_Provider_Facebook this
      */
 
-    private function setFacebookSession(\Facebook\FacebookSession $session)
+    private function setFacebookToken(\Facebook\Authentication\AccessToken $token)
     {
         $this->getStorage()
-            ->set($this->getAlias(), 'auth_data',           $session->getSignedRequestData())
+            ->set($this->getAlias(), 'access_token',    $token->getValue())
+            ->set($this->getAlias(), 'expiresAt',       $token->getExpiresAt())
         ;
 
-        $this->_facebook_session = $session;
+        $this->_facebook_token = $token;
 
         return $this;
     }
@@ -155,11 +177,16 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
      * @return \Facebook\FacebookSession
      */
 
-    private function getFacebookSession()
+    private function getFacebookToken()
     {
-        if (!$this->_facebook_session)
-            throw new Apishka_SocialLogin_Exception('Wrong facebook session');
+        if (!$this->_facebook_token)
+        {
+            $this->_facebook_token = new \Facebook\Authentication\AccessToken(
+                $this->getStorage()->get($this->getAlias(), 'access_token'),
+                $this->getStorage()->get($this->getAlias(), 'expiresAt')
+            );
+        }
 
-        return $this->_facebook_session;
+        return $this->_facebook_token;
     }
 }
