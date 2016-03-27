@@ -2,11 +2,6 @@
 
 /**
  * Apishka social login provider: abstract oauth
- *
- * @uses    Apishka_SocialLogin_ProviderAbstract
- * @abstract
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_SocialLogin_ProviderAbstract
@@ -179,7 +174,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Returns api request url
      *
-     * @abstract
      *
      * @return string
      */
@@ -189,7 +183,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Returns authorize url
      *
-     * @abstract
      *
      * @return string
      */
@@ -199,7 +192,6 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Returns oauth access url
      *
-     * @abstract
      *
      * @return string
      */

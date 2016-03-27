@@ -2,10 +2,6 @@
 
 /**
  * Apishka social login provider router
- *
- * @uses \Apishka\EasyExtend\Router\ByKeyAbstract
- *
- * @author Alexander "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_ProviderRouter extends \Apishka\EasyExtend\Router\ByKeyAbstract

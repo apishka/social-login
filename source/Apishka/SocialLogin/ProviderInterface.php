@@ -2,8 +2,6 @@
 
 /**
  * Apishka social login interface for providers
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 interface Apishka_SocialLogin_ProviderInterface

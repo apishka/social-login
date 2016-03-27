@@ -2,8 +2,6 @@
 
 /**
  * Apishka social login storage interface
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 interface Apishka_SocialLogin_StorageInterface

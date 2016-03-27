@@ -2,8 +2,6 @@
 
 /**
  * Apishka social login main class
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_SocialLogin

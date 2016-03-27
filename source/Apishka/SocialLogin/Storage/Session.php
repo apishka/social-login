@@ -2,10 +2,6 @@
 
 /**
  * Apishka social login storage session
- *
- * @uses    Apishka_SocialLogin_StorageInterface
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_Storage_Session implements Apishka_SocialLogin_StorageInterface

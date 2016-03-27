@@ -2,10 +2,6 @@
 
 /**
  * Apishka social login provider: twitter
- *
- * @uses    Apishka_SocialLogin_Provider_OauthAbstract
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_OauthAbstract

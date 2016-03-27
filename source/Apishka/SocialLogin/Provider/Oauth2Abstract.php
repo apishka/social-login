@@ -2,11 +2,6 @@
 
 /**
  * Apishka_SocialLogin_Provider_Oauth2Abstract
- *
- * @uses    Apishka_SocialLogin_ProviderAbstract
- * @abstract
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_SocialLogin_ProviderAbstract

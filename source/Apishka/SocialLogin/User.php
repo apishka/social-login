@@ -2,8 +2,6 @@
 
 /**
  * Apishka social login user model
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_User

@@ -2,10 +2,6 @@
 
 /**
  * Apishka social login provider: google
- *
- * @uses    Apishka_SocialLogin_Provider_Oauth2Abstract
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_Oauth2Abstract

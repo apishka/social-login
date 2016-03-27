@@ -2,10 +2,6 @@
 
 /**
  * Apishka social login provider: mailru
- *
- * @uses    Apishka_SocialLogin_Provider_OauthAbstract
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_Provider_Mailru extends Apishka_SocialLogin_Provider_Oauth2Abstract

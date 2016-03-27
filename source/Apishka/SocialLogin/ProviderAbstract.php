@@ -2,11 +2,6 @@
 
 /**
  * Apishka social login provider abstract
- *
- * @uses    Apishka_SocialLogin_ProviderInterface
- * @abstract
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLogin_ProviderInterface
@@ -56,7 +51,6 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     /**
      * Returns user info
      *
-     * @abstract
      *
      * @return Apishka_SocialLogin_User
      */

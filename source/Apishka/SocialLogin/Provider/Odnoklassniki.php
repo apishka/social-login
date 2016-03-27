@@ -2,10 +2,6 @@
 
 /**
  * Apishka social login provider: odnoklassniki
- *
- * @uses    Apishka_SocialLogin_Provider_OauthAbstract
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Provider_Oauth2Abstract

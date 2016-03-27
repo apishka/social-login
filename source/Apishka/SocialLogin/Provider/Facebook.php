@@ -2,10 +2,6 @@
 
 /**
  * Apishka social login provider: facebook
- *
- * @uses    Apishka_SocialLogin_ProviderAbstract
- *
- * @author  Alex "grevus" Lobtsov <alex@lobtsov.com>
  */
 
 class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_ProviderAbstract
@@ -144,8 +140,8 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
     private function getFBObject()
     {
         return new \Facebook\Facebook([
-            'app_id' => $this->getProviderConfig()['client_id'],
-            'app_secret' => $this->getProviderConfig()['client_secret'],
+            'app_id'                => $this->getProviderConfig()['client_id'],
+            'app_secret'            => $this->getProviderConfig()['client_secret'],
             'default_graph_version' => 'v2.2',
         ]);
     }
