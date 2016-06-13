@@ -7,6 +7,14 @@
 class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_Oauth2Abstract
 {
     /**
+     * Is need reprompt
+     *
+     * @var bool
+     */
+
+    private $_is_need_reprompt = false;
+
+    /**
      * Returns alias
      *
      * @return string
@@ -61,6 +69,40 @@ class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_O
     }
 
     /**
+     * Is need re prompt
+     *
+     * @return array
+     */
+
+    protected function getAutorizeQueryParams()
+    {
+        $params = parent::getAutorizeQueryParams();
+
+        if ($this->isNeedRePrompt())
+            $params['prompt'] = 'consent';
+
+        return $params;
+    }
+
+    /**
+     * Is need re prompt
+     *
+     * @param bool $value
+     *
+     * @return bool|this
+     */
+
+    public function isNeedRePrompt($value = null)
+    {
+        if ($value === null)
+            return $this->_is_need_reprompt;
+
+        $this->_is_need_reprompt = (bool) $value;
+
+        return $this;
+    }
+
+    /**
      * Returns scope
      *
      * @return string
@@ -106,5 +148,4 @@ class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_O
     {
         return 'https://www.googleapis.com/plus/v1/people/me';
     }
-
 }

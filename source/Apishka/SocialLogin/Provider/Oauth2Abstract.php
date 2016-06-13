@@ -7,31 +7,46 @@
 abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_SocialLogin_ProviderAbstract
 {
     /**
+     * State
+     *
+     * @var string
+     */
+
+    private $_state;
+
+    /**
      * Do authorize redirect
      */
 
     public function doAuthorizeRedirect()
     {
-        $state = $this->getOauthState();
-
         $this->getStorage()
-            ->set($this->getAlias(), 'provider_state', $state)
+            ->set($this->getAlias(), 'provider_state', $this->getOauthState())
         ;
 
         $url = \GuzzleHttp\Url::fromString($this->getOauthAuthorizeUrl());
-        $url->setQuery(
-            array(
-                'client_id'     => $this->getProviderConfig()['client_id'],
-                'scope'         => $this->getOauthScope(),
-                'redirect_uri'  => $this->getCallbackUrl(),
-                'response_type' => 'code',
-                'state'         => $state,
-                'access_type'   => 'offline',
-            )
-        );
+        $url->setQuery($this->getAutorizeQueryParams());
 
         header('Location: ' . $url->__toString(), true, 302);
         die;
+    }
+
+    /**
+     * Is need re prompt
+     *
+     * @return array
+     */
+
+    protected function getAutorizeQueryParams($state)
+    {
+        return array(
+            'client_id'     => $this->getProviderConfig()['client_id'],
+            'scope'         => $this->getOauthScope(),
+            'redirect_uri'  => $this->getCallbackUrl(),
+            'response_type' => 'code',
+            'state'         => $this->getOauthState(),
+            'access_type'   => 'offline',
+        );
     }
 
     /**
@@ -203,6 +218,22 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
 
     protected function getOauthState($time = 'now')
     {
+        if ($this->_state === null)
+            $this->_state = $this->buildOauthState($time);
+
+        return $this->_state;
+    }
+
+    /**
+     * Build oauth state
+     *
+     * @param string $time
+     *
+     * @return string
+     */
+
+    protected function buildOauthState($time)
+    {
         return md5($this->getAlias() . date('H', strtotime($time)));
     }
 
@@ -214,10 +245,10 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
 
     protected function checkOauthState($state)
     {
-        if ($state == $this->getOauthState('now'))
+        if ($state == $this->buildOauthState('now'))
             return;
 
-        if ($state == $this->getOauthState('-1 hour'))
+        if ($state == $this->buildOauthState('-1 hour'))
             return;
 
         throw new Apishka_SocialLogin_Exception('Wrong state');
