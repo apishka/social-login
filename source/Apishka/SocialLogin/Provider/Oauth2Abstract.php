@@ -37,7 +37,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
      * @return array
      */
 
-    protected function getAutorizeQueryParams($state)
+    protected function getAutorizeQueryParams()
     {
         return array(
             'client_id'     => $this->getProviderConfig()['client_id'],
