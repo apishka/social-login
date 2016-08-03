@@ -25,12 +25,14 @@ class Apishka_SocialLogin_Provider_Vkontakte extends Apishka_SocialLogin_Provide
 
     public function getUserInfo()
     {
-        $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
-        $url->setQuery(
-            array(
-                'uid'           => $this->getAuthData()['user_id'],
-                'fields'        => 'first_name,last_name,nickname,screen_name,sex,bdate,photo_big',
-                'access_token'  => $this->getStorage()->get($this->getAlias(), 'access_token'),
+        $url = new \GuzzleHttp\Psr7\Uri($this->getProfileInfoUrl());
+        $url = $url->withQuery(
+            http_build_query(
+                array(
+                    'uid'           => $this->getAuthData()['user_id'],
+                    'fields'        => 'first_name,last_name,nickname,screen_name,sex,bdate,photo_big',
+                    'access_token'  => $this->getStorage()->get($this->getAlias(), 'access_token'),
+                )
             )
         );
 

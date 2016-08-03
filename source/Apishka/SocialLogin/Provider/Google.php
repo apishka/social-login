@@ -33,10 +33,12 @@ class Apishka_SocialLogin_Provider_Google extends Apishka_SocialLogin_Provider_O
 
     public function getUserInfo()
     {
-        $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
-        $url->setQuery(
-            array(
-                'oauth_token'   => $this->getStorage()->get($this->getAlias(), 'access_token'),
+        $url = new \GuzzleHttp\Psr7\Uri($this->getProfileInfoUrl());
+        $url = $url->withQuery(
+            http_build_query(
+                array(
+                    'oauth_token'   => $this->getStorage()->get($this->getAlias(), 'access_token'),
+                )
             )
         );
 

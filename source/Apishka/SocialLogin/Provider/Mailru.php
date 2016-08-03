@@ -35,8 +35,8 @@ class Apishka_SocialLogin_Provider_Mailru extends Apishka_SocialLogin_Provider_O
 
         $params['sig'] = $this->buildSignature($params);
 
-        $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
-        $url->setQuery($params);
+        $url = new \GuzzleHttp\Psr7\Uri($this->getProfileInfoUrl());
+        $url = $url->withQuery(http_build_query($params));
 
         $info = $this->makeRequest($url);
 

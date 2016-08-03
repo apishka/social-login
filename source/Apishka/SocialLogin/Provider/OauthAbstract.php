@@ -14,7 +14,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     protected function doGetRequestToken()
     {
-        $url = \GuzzleHttp\Url::fromString($this->getOauthRequestUrl());
+        $url = new \GuzzleHttp\Psr7\Uri($this->getOauthRequestUrl());
 
         parse_str(
             $this->makeRequest($url),
@@ -30,10 +30,12 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     protected function doAuthorizeRedirect()
     {
-        $url = \GuzzleHttp\Url::fromString($this->getOauthAuthorizeUrl());
-        $url->setQuery(
-            array(
-                'oauth_token' => $this->getStorage()->get($this->getAlias(), 'request_token'),
+        $url = new \GuzzleHttp\Psr7\Uri($this->getOauthAuthorizeUrl());
+        $url = $url->withQuery(
+            http_build_query(
+                array(
+                    'oauth_token' => $this->getStorage()->get($this->getAlias(), 'request_token'),
+                )
             )
         );
 
@@ -49,7 +51,7 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
 
     protected function doGetAccessToken()
     {
-        $url = \GuzzleHttp\Url::fromString($this->getOauthAccessUrl());
+        $url = new \GuzzleHttp\Psr7\Uri($this->getOauthAccessUrl());
 
         parse_str(
             $this->makeRequest(
@@ -120,14 +122,14 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Make request
      *
-     * @param \GuzzleHttp\Url $url
+     * @param \GuzzleHttp\Uri $url
      * @param string          $method
      * @param array           $oauth_params
      *
      * @return string
      */
 
-    protected function makeRequest(\GuzzleHttp\Url $url, $method = 'post', array $oauth_params = array())
+    protected function makeRequest(\GuzzleHttp\Uri $url, $method = 'post', array $oauth_params = array())
     {
         if (!isset($this->getProviderConfig()['consumer_key'], $this->getProviderConfig()['consumer_secret']))
             throw new InvalidArgumentException('Keys consumer_key and consumer_secret must be set in config');
@@ -150,19 +152,13 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
         );
 
         $http_client->getEmitter()->attach($oauth);
-        //$http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber(null, \GuzzleHttp\Subscriber\Log\Formatter::DEBUG));
 
         try
         {
             $result = $http_client->$method($url);
         }
-        catch (GuzzleHttp\Exception\RequestException $exception)
+        catch (\GuzzleHttp\Exception\RequestException $exception)
         {
-            //if ($exception->hasResponse()) {
-            //    echo $exception->getResponse();
-            //}
-            //die;
-
             throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
         }
 

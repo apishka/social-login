@@ -24,8 +24,10 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
             ->set($this->getAlias(), 'provider_state', $this->getOauthState())
         ;
 
-        $url = \GuzzleHttp\Url::fromString($this->getOauthAuthorizeUrl());
-        $url->setQuery($this->getAutorizeQueryParams());
+        $url = new \GuzzleHttp\Psr7\Uri($this->getOauthAuthorizeUrl());
+        $url = $url->withQuery(
+            http_build_query($this->getAutorizeQueryParams())
+        );
 
         header('Location: ' . $url->__toString(), true, 302);
         die;
@@ -57,7 +59,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
 
     public function doAccessTokenRequest()
     {
-        $url = \GuzzleHttp\Url::fromString($this->getOauthAccessTokenUrl());
+        $url = new \GuzzleHttp\Psr7\Uri($this->getOauthAccessTokenUrl());
 
         return $this->makeRequest(
             $url,
@@ -152,7 +154,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
 
     public function doRefreshTokenRequest()
     {
-        $url = \GuzzleHttp\Url::fromString($this->getOauthAccessTokenUrl());
+        $url = new \GuzzleHttp\Psr7\Uri($this->getOauthAccessTokenUrl());
 
         return $this->makeRequest(
             $url,
@@ -257,18 +259,16 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     /**
      * Make request
      *
-     * @param \GuzzleHttp\Url $url
+     * @param \GuzzleHttp\Uri $url
      * @param string          $method
      * @param array           $post_params
      *
      * @return string
      */
 
-    protected function makeRequest(\GuzzleHttp\Url $url, $method = 'get', array $post_params = array())
+    protected function makeRequest(\GuzzleHttp\Uri $url, $method = 'get', array $post_params = array())
     {
         $http_client = new \GuzzleHttp\Client();
-
-        //$http_client->getEmitter()->attach(new \GuzzleHttp\Subscriber\Log\LogSubscriber(null, \GuzzleHttp\Subscriber\Log\Formatter::DEBUG));
 
         try
         {
@@ -282,7 +282,7 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
                     $result = $http_client->post(
                         $url,
                         array(
-                            'body' => $post_params,
+                            'query' => $post_params,
                         )
                     );
                     break;
@@ -291,13 +291,8 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
                     throw new Apishka_SocialLogin_Exception();
             }
         }
-        catch (GuzzleHttp\Exception\RequestException $exception)
+        catch (\GuzzleHttp\Exception\RequestException $exception)
         {
-            //if ($exception->hasResponse()) {
-            //    echo $exception->getResponse();
-            //}
-            //die;
-
             throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
         }
 

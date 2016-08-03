@@ -25,7 +25,7 @@ class Apishka_SocialLogin_Provider_Twitter extends Apishka_SocialLogin_Provider_
 
     public function getUserInfo()
     {
-        $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
+        $url = new \GuzzleHttp\Psr7\Uri($this->getProfileInfoUrl());
 
         $info = $this->makeRequest(
             $url,

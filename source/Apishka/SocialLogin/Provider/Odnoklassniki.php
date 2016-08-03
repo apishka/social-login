@@ -37,8 +37,8 @@ class Apishka_SocialLogin_Provider_Odnoklassniki extends Apishka_SocialLogin_Pro
         $params['sig']          = $this->buildSignature($params);
         $params['access_token'] = $this->getStorage()->get($this->getAlias(), 'access_token');
 
-        $url = \GuzzleHttp\Url::fromString($this->getProfileInfoUrl());
-        $url->setQuery($params);
+        $url = new \GuzzleHttp\Psr7\Uri($this->getProfileInfoUrl());
+        $url = $url->withQuery(http_build_query($params));
 
         $info = $this->makeRequest($url);
 
