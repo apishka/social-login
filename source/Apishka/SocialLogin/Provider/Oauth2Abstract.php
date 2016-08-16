@@ -259,14 +259,14 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
     /**
      * Make request
      *
-     * @param \GuzzleHttp\Uri $url
-     * @param string          $method
-     * @param array           $post_params
+     * @param \GuzzleHttp\Psr7\Uri $url
+     * @param string $method
+     * @param array $post_params
      *
      * @return string
      */
 
-    protected function makeRequest(\GuzzleHttp\Uri $url, $method = 'get', array $post_params = array())
+    protected function makeRequest(\GuzzleHttp\Psr7\Uri $url, $method = 'get', array $post_params = array())
     {
         $http_client = new \GuzzleHttp\Client();
 

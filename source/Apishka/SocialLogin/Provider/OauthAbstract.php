@@ -122,14 +122,14 @@ abstract class Apishka_SocialLogin_Provider_OauthAbstract extends Apishka_Social
     /**
      * Make request
      *
-     * @param \GuzzleHttp\Uri $url
-     * @param string          $method
-     * @param array           $oauth_params
+     * @param \GuzzleHttp\Psr7\Uri $url
+     * @param string $method
+     * @param array $oauth_params
      *
      * @return string
      */
 
-    protected function makeRequest(\GuzzleHttp\Uri $url, $method = 'post', array $oauth_params = array())
+    protected function makeRequest(\GuzzleHttp\Psr7\Uri $url, $method = 'post', array $oauth_params = array())
     {
         if (!isset($this->getProviderConfig()['consumer_key'], $this->getProviderConfig()['consumer_secret']))
             throw new InvalidArgumentException('Keys consumer_key and consumer_secret must be set in config');
