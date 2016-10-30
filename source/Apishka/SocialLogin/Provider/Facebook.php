@@ -60,11 +60,12 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
                 );
 
                 header('Location: ' . $url, true, 302);
+                die;
             }
         }
         catch(\Facebook\Exceptions\FacebookSDKException $ex)
         {
-            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $exception);
+            throw new Apishka_SocialLogin_Exception('Provider return an error', 0, $ex);
         }
 
         if ($token)
@@ -175,7 +176,7 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
 
     private function getFacebookToken()
     {
-        if (!$this->_facebook_token)
+        if ($this->_facebook_token === null)
         {
             $this->_facebook_token = new \Facebook\Authentication\AccessToken(
                 $this->getStorage()->get($this->getAlias(), 'access_token'),
