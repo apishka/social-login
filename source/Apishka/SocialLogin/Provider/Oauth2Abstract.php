@@ -95,6 +95,10 @@ abstract class Apishka_SocialLogin_Provider_Oauth2Abstract extends Apishka_Socia
             if (!isset($_GET['state']))
                 throw new Apishka_SocialLogin_Exception('Error in request: state not found');
 
+            // https://tools.ietf.org/html/rfc6749#section-5.2
+            if (isset($_GET['error']))
+                throw new Apishka_SocialLogin_Exception('Error in response: ' . var_export($_GET['error'], true));
+
             $this->checkOauthState($_GET['state']);
 
             $request = json_decode($this->doAccessTokenRequest(), true);
