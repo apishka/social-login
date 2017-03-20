@@ -143,7 +143,7 @@ class Apishka_SocialLogin_Provider_Facebook extends Apishka_SocialLogin_Provider
         return new \Facebook\Facebook([
             'app_id'                => $this->getProviderConfig()['client_id'],
             'app_secret'            => $this->getProviderConfig()['client_secret'],
-            'default_graph_version' => 'v2.4',
+            'default_graph_version' => 'v2.8',
         ]);
     }
 
