@@ -69,7 +69,9 @@ abstract class Apishka_SocialLogin_ProviderAbstract implements Apishka_SocialLog
     }
 
     /**
-     * getStorage
+     * Get storage
+     *
+     * @return Apishka_SocialLogin_StorageInterface
      */
 
     protected function getStorage()
