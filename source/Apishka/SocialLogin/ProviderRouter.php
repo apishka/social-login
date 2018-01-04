@@ -1,34 +1,16 @@
-<?php
+<?php declare(strict_types = 1);
 
 /**
  * Apishka social login provider router
  */
-
 class Apishka_SocialLogin_ProviderRouter extends \Apishka\EasyExtend\Router\ByKeyAbstract
 {
-    /**
-     * Is correct item
-     *
-     * @param \ReflectionClass $reflector
-     *
-     * @return bool
-     */
-
-    protected function isCorrectItem(\ReflectionClass $reflector)
+    protected function isCorrectItem(\ReflectionClass $reflector): bool
     {
-        return $this->hasClassInterface($reflector, 'Apishka_SocialLogin_ProviderInterface');
+        return $this->hasClassInterface($reflector, Apishka_SocialLogin_ProviderInterface::class);
     }
 
-    /**
-     * Get class variants
-     *
-     * @param \ReflectionClass $reflector
-     * @param object           $item
-     *
-     * @return array
-     */
-
-    protected function getClassVariants(\ReflectionClass $reflector, $item)
+    protected function getClassVariants(\ReflectionClass $reflector, $item): array
     {
         return array(
             $item->getALias(),
